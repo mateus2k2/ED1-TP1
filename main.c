@@ -3,12 +3,6 @@
 #include <string.h>
 
 /*
-DUVIDAS
-Tratas casos de erros
-Arrumar funções
-*/
-
-/*
 gcc -c tabuleiro.c -Wall
 gcc -c main.c -Wall
 gcc tabuleiro.o main.o -o exe
@@ -58,8 +52,7 @@ int main(int argc, char *argv[]) {
     // 0 linha 1 coluna 3 região
     int metodo = 0, erro = 0;
 
-    //Se encontrar 1 invaliza printar a invalidade
-    //Forma de dar esse print 1 vez se encontrar uma invalidade
+    //Se encontrar 1 invalida printar a invalidade
     //Dividir EhValido em mais funções
     printf("Alguma coisa deu errado... Invalidos:");
     for (int i = 0; i < 9; i++){
