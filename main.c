@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+DUVIDAS
+Tratas casos de erros
+Arrumar funções
+*/
 
 /*
 gcc -c tabuleiro.c -Wall
