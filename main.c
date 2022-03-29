@@ -33,14 +33,13 @@ int main(int argc, char *argv[]) {
     //Inicializa Tabuleiro como nome do arquivo do argv
     TabuleiroInicializa(nomeArquivo, Tabuleiro);
 
-    //Verificar as celulas vazias
+    //Verificar se tem celulas vazias
     for (int i = 0; i < 9; i++){
         for (int j = 0; j < 9; j++){
             if(defineVazias(Tabuleiro, i, j) == 1)
                 temVazia = 1;
         }
     }
-    
     
     //Se encontrar invalida printar o problema
     printf("Alguma coisa deu errado... Invalidos:");
