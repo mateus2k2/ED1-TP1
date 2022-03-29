@@ -25,7 +25,7 @@ void TabuleiroInicializa(char *nomeArquivo, QTabuleiro*);
 int defineVazias(QTabuleiro*, int lin, int col);
 
 //verifica se uma célula é válida.
-int EhValido(QTabuleiro*, int lin, int col, int metodo, QCelula* Conflitos); 
+int EhValido(QTabuleiro*); 
 
 // retorna todos os valores válidos para uma célula vazia.
 int* valoresValidos(QTabuleiro*);
