@@ -3,11 +3,15 @@
 #include <string.h>
 
 /*
+ARQUIVOS INTERMEDIÁRIOS
 gcc -c tabuleiro.c -Wall
 gcc -c main.c -Wall
+LINKAR ARQUIVOS
 gcc tabuleiro.o main.o -o exe
-./exe < Casos/1.in
+EXECUTAR
+./exe
 
+COMPILAR TUDO DE UMA VEZ
 gcc *.c -o exe
 ./exe
 */
