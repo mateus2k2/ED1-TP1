@@ -34,8 +34,13 @@ int main(int argc, char *argv[]) {
         strcpy(nomeArquivo, argv[1]);
     }
     
+    
+    
     //Inicializa Tabuleiro como nome do arquivo do argv
     TabuleiroInicializa(nomeArquivo, Tabuleiro);
+
+    //Mostra p tabuleiro
+    imprimeTabuleiro(Tabuleiro);
 
     //Verificar se tem celulas vazias
     for (int i = 0; i < 9; i++){
@@ -46,7 +51,6 @@ int main(int argc, char *argv[]) {
     }
     
     //Se encontrar invalida printar o problema
-    printf("Alguma coisa deu errado... Invalidos:");
     for (int i = 0; i < 9; i++){
         for (int j = 0; j < 9; j++){
             if(EhValido(Tabuleiro) == 0){

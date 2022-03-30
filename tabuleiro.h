@@ -18,6 +18,8 @@ void desalocaNomeArquivo(char **nomeArquivo);
 void alocaCelula(QCelula **Celula);
 void desalocacelula(QCelula **Celula);
 
+void imprimeTabuleiro(QTabuleiro*);
+
 //inicializa tabuleiro a partir de arquivo
 void TabuleiroInicializa(char *nomeArquivo, QTabuleiro*);
 
@@ -32,4 +34,4 @@ int* valoresValidos(QTabuleiro*);
 
 
 
-#endif // ALUNO_H
+#endif //ALUNO_H

@@ -59,9 +59,10 @@ void TabuleiroInicializa(char *nomeArquivo, QTabuleiro* Tabuleiro){
 
   for (int i = 0; i < 9; i++){
     for (int j = 0; j < 9; j++){
-      fscanf(arquivo, "%i", &valor);
-      fscanf(arquivo, "%c", &tmp);
+      fscanf(arquivo, "%d%c", &valor, &tmp);
+    
       (*Tabuleiro).celulas[i][j].conteudo = valor;
+      
     }
   }
   
@@ -76,7 +77,30 @@ int defineVazias(QTabuleiro* Tabuleiro, int lin, int col){
   return 0;
 }
 
+void imprimeTabuleiro(QTabuleiro *tabuleiro){
+
+  for(int i = 0; i < 9; i++){
+    if(i == 0){
+      printf("   1 2 3   4 5 6   7 8 9\n   -----------------------\n");
+    }
+    for(int j = 0; j < 9; j++){
+      if(j == 0){
+        printf("%d | ", (i+1));
+      }
+      printf("%d ",(*tabuleiro).celulas[i][j].conteudo);
+      if(j == 2 || j == 5 || j == 8){
+        printf("| ");
+      }
+    }
+    if(i == 2 || i == 5 || i == 8){
+        printf("\n   -----------------------");
+      }
+    printf("\n");
+  }
+}
+
 
 int EhValido(QTabuleiro* Tabuleiro){
   
 }
+
