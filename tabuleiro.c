@@ -8,8 +8,11 @@
 struct celula{
   //conteudo da celula (int 1 a 9)
   int conteudo;
-  //posicao
-  int lin, col;
+
+  int invalidoLinha;
+  int invalidoColuna;
+  int invalidoRegiao;
+
 };
 
 struct tabuleiro{
@@ -99,8 +102,100 @@ void imprimeTabuleiro(QTabuleiro *tabuleiro){
   }
 }
 
+int EhValidoLinha(QTabuleiro* Tabuleiro, int lin, int col){
 
-int EhValido(QTabuleiro* Tabuleiro){
+  int retorno = 0;  
+
+  for (int i = 0; i < 9; i++){
+    if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != col && (*Tabuleiro).celulas[lin][i].invalidoLinha != 1){
+      (*Tabuleiro).celulas[lin][i].invalidoLinha = 1;
+      retorno++;
+    }
+  }
+
+  if(retorno != 0)
+    (*Tabuleiro).celulas[lin][col].invalidoLinha = 1;
+
+  return retorno;
   
 }
+
+int EhValidoColuna(QTabuleiro* Tabuleiro, int lin, int col){
+
+  int retorno = 0;  
+
+  for (int i = 0; i < 9; i++){
+    if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != lin && (*Tabuleiro).celulas[i][col].invalidoColuna != 1){
+      (*Tabuleiro).celulas[i][col].invalidoColuna = 1;
+      retorno++;
+    }
+  }
+
+  if(retorno != 0)
+    (*Tabuleiro).celulas[lin][col].invalidoColuna = 1;
+
+  return retorno;
+  
+}
+
+int EhValidoRegiao(QTabuleiro* Tabuleiro, int lin, int col){
+  
+  // int retorno = 0;  
+
+  // for (int i = 0; i < 9; i++){
+  //   if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != col && (*Tabuleiro).celulas[lin][i].invalidoLinha != 1){
+  //     (*Tabuleiro).celulas[lin][i].invalidoLinha = 1;
+  //     retorno++;
+  //   }
+  // }
+
+  // if(retorno != 0)
+  //   (*Tabuleiro).celulas[lin][col].invalidoLinha = 1;
+
+  // return retorno;
+}
+
+void PrintInvalidas(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int quantidadeInvalidas){
+
+  int invalidasEncontras = 0;
+
+  //Verifica Linha
+  if(metodo == 0){
+    for (int i = 0; i < 9; i++){
+      if( (*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo ){
+        printf("(%i, %i)", lin+1, i+1);
+        invalidasEncontras++;
+
+        if(invalidasEncontras - 1 == quantidadeInvalidas){
+          printf("\n");
+          break;
+        }
+        else
+          printf(" e ");
+      }
+    }
+  }
+
+  //Verifica Coluna
+  if(metodo == 1){
+    for (int i = 0; i < 9; i++){
+      if( (*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo ){
+        printf("(%i, %i)", i+1, col+1);
+        invalidasEncontras++;
+
+        if(invalidasEncontras - 1 == quantidadeInvalidas){
+          printf("\n");
+          break;
+        }
+        else
+          printf(" e ");
+      }
+    }
+  }
+
+  //Verifica Região
+
+
+}      
+
 

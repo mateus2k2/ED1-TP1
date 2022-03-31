@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
     QTabuleiro *Tabuleiro;
     char *nomeArquivo;
     int temVazia;
+    int quantidadeInvalidas;
 
     //Aloca Tabuleiro
     alocaTabuleiro(&Tabuleiro);
@@ -32,9 +33,7 @@ int main(int argc, char *argv[]) {
     else{
         alocaNomeArquivo(&nomeArquivo, strlen(argv [1]));
         strcpy(nomeArquivo, argv[1]);
-    }
-    
-    
+    }  
     
     //Inicializa Tabuleiro como nome do arquivo do argv
     TabuleiroInicializa(nomeArquivo, Tabuleiro);
@@ -49,25 +48,50 @@ int main(int argc, char *argv[]) {
                 temVazia = 1;
         }
     }
-    
-    //Se encontrar invalida printar o problema
+
+    //Função pra verificar se tem pelo menos 1 invalida e printar (Voce esta no caminho certo. Sugestoes:)
+
+    //Printar Problema na linha
     for (int i = 0; i < 9; i++){
         for (int j = 0; j < 9; j++){
-            if(EhValido(Tabuleiro) == 0){
-                
+            quantidadeInvalidas = EhValidoLinha(Tabuleiro, i, j);
+            if(quantidadeInvalidas != 0){
+                printf("Linha %i: ", i+1);
+                PrintInvalidas(Tabuleiro, i, j, 0, quantidadeInvalidas);      
             }
         }        
-    }    
+    }     
 
-    // //Se não tiver Vazias ou Inválidas, printar sucesso
+    //Printar Problema na coluna
+    for (int i = 0; i < 9; i++){
+        for (int j = 0; j < 9; j++){
+            quantidadeInvalidas = EhValidoColuna(Tabuleiro, i, j);
+            if(quantidadeInvalidas != 0){
+                printf("Coluna %i: ", i+1);
+                PrintInvalidas(Tabuleiro, i, j, 1, quantidadeInvalidas);      
+            }
+        }        
+    } 
+
+    //Printar Problema na linha
+    // for (int i = 0; i < 9; i++){
+    //     for (int j = 0; j < 9; j++){
+    //         quantidadeInvalidas = EhValidoRegiao(Tabuleiro, i, j);
+    //         if(quantidadeInvalidas != 0){
+    //             printf("Regiao %i: ", i+1);
+    //             PrintInvalidas(Tabuleiro, i, j, 2, quantidadeInvalidas);      
+    //         }
+    //     }        
+    // }  
+
+    //Se não tiver Vazias ou Inválidas, printar sucesso
     
-    // //Se não tiver inválidas e tiver vazias, printar sugestões
+    //Se não tiver inválidas e tiver vazias, printar sugestões
 
     // //Problemas
     // desalocaTabuleiro(&Tabuleiro);
     // desalocaNomeArquivo(&nomeArquivo);
 
-    printf("\n");
 
     return 0;
 }
