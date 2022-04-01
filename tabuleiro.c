@@ -102,15 +102,17 @@ void imprimeTabuleiro(QTabuleiro *tabuleiro){
   }
 }
 
+//abstrair em uma unica funçao
 int EhValidoLinha(QTabuleiro* Tabuleiro, int lin, int col){
 
   int retorno = 0;  
 
   for (int i = 0; i < 9; i++){
-    if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != col && (*Tabuleiro).celulas[lin][i].invalidoLinha != 1){
+    if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != col && (*Tabuleiro).celulas[lin][i].invalidoLinha != 1 && (*Tabuleiro).celulas[lin][i].conteudo != 0){
       (*Tabuleiro).celulas[lin][i].invalidoLinha = 1;
       retorno++;
     }
+  
   }
 
   if(retorno != 0)
