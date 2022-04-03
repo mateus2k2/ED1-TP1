@@ -108,43 +108,54 @@ void imprimeTabuleiro(QTabuleiro *tabuleiro){
   }
 }
 
-//Tabuleiro, i, j, 0, &reg, &quantidadeInvalidas, &coodenadasInvalidas
 void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *quantidadeInvalidas, int coodenadasInvalidas[9][2]){
 
   (*quantidadeInvalidas) = 0;
-
   int offset[9][2] = {{0,0}, {0,3}, {0, 6}, {3, 0}, {3, 3}, {3, 6}, {6,0}, {6,3}, {6,6}};
 
   //Valida Linha
-  if(metodo == 0){
+  if(metodo == 0 || metodo == 3){
     for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != col && (*Tabuleiro).celulas[lin][i].invalidoLinha != 1 && (*Tabuleiro).celulas[lin][i].conteudo != 0){
+      if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != col && 
+        (*Tabuleiro).celulas[lin][i].invalidoLinha != 1 && (*Tabuleiro).celulas[lin][i].conteudo != 0){
+          
         coodenadasInvalidas[(*quantidadeInvalidas)+1][0] = lin;
         coodenadasInvalidas[(*quantidadeInvalidas)+1][1] = i;
-        
-        (*Tabuleiro).celulas[lin][i].invalidoLinha = 1;
+
         (*quantidadeInvalidas)++;
+
+        if(metodo == 3)
+          break;        
+
+        (*Tabuleiro).celulas[lin][i].invalidoLinha = 1;
+        
       }
     }
 
   }
 
   //Valida Coluna
-  if(metodo == 1){
+  if(metodo == 1 || metodo == 3){
     for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != lin && (*Tabuleiro).celulas[i][col].invalidoColuna != 1 && (*Tabuleiro).celulas[i][col].conteudo != 0){
+      if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != lin && 
+        (*Tabuleiro).celulas[i][col].invalidoColuna != 1 && (*Tabuleiro).celulas[i][col].conteudo != 0){
+      
         coodenadasInvalidas[(*quantidadeInvalidas)+1][0] = i;
         coodenadasInvalidas[(*quantidadeInvalidas)+1][1] = col;
-        
-        (*Tabuleiro).celulas[i][col].invalidoColuna = 1;
+
         (*quantidadeInvalidas)++;
+
+        if(metodo == 3)
+          break;
+
+        (*Tabuleiro).celulas[i][col].invalidoColuna = 1;
 
       }
     }
   }
 
   //Verifica Região
-  if(metodo == 2){
+  if(metodo == 2 || metodo == 3){
     //verificar em qual região estou
     if(lin < 3 && col < 3)
       (*reg) = 0;
@@ -167,13 +178,19 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
 
     for (int j = offset[(*reg)][0]; j < offset[(*reg)][0]+3; j++){
       for (int k = offset[(*reg)][1]; k < offset[(*reg)][1]+3; k++){
-        if((*Tabuleiro).celulas[j][k].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && ((j != lin && k != col) || (j == lin && k != col) || (j != lin && k == col) ) && (*Tabuleiro).celulas[j][k].invalidoRegiao != 1 && (*Tabuleiro).celulas[j][k].conteudo != 0){
+        if((*Tabuleiro).celulas[j][k].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && ((j != lin && k != col) || (j == lin && k != col) || (j != lin && k == col) ) 
+          && (*Tabuleiro).celulas[j][k].invalidoRegiao != 1 && (*Tabuleiro).celulas[j][k].conteudo != 0){
+          
           coodenadasInvalidas[(*quantidadeInvalidas)+1][0] = j;
           coodenadasInvalidas[(*quantidadeInvalidas)+1][1] = k;          
-          
-          (*Tabuleiro).celulas[j][k].invalidoRegiao = 1;
-          (*quantidadeInvalidas)++;
 
+          (*quantidadeInvalidas)++;
+          
+          if(metodo == 3)
+            break;
+
+          (*Tabuleiro).celulas[j][k].invalidoRegiao = 1;
+          
         }
       }
     } 

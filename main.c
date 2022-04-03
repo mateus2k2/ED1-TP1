@@ -22,10 +22,11 @@ int main(int argc, char *argv[]) {
     QTabuleiro *Tabuleiro;
     char *nomeArquivo;
     
-    int temVazia;
-    int quantidadeInvalidas = 0;
-    int coodenadasInvalidas[9][2];
+    int temVazia = 0;
     int reg; 
+
+    int coodenadasInvalidas[9][2];
+    int quantidadeInvalidas = 0;
 
     //Aloca Tabuleiro
     alocaTabuleiro(&Tabuleiro);
@@ -53,44 +54,68 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    //Printar Problema na linha
-    // for (int i = 0; i < 9; i++){
-    //     for (int j = 0; j < 9; j++){
-    //         valida(Tabuleiro, i, j, 0, &reg, &quantidadeInvalidas, coodenadasInvalidas);
-    //         if(quantidadeInvalidas != 0){
-    //             printf("Linha %i: ", i+1);
-    //             PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);      
-    //         }
-    //     }        
-    // }     
-
-    // //Printar Problema na coluna
+    //Printar Mensagem de erro
     for (int i = 0; i < 9; i++){
         for (int j = 0; j < 9; j++){
-            valida(Tabuleiro, i, j, 1, &reg, &quantidadeInvalidas, coodenadasInvalidas);
+            valida(Tabuleiro, i, j, 3, &reg, &quantidadeInvalidas, coodenadasInvalidas);
             if(quantidadeInvalidas != 0){
-                printf("Coluna %i: ", j+1);
+                printf("Alguma coisa deu errado... Invalidos:\n");
+                break;
+            }
+        }    
+        if(quantidadeInvalidas != 0)
+            break;;
+    }
+
+    quantidadeInvalidas = 0;
+    //Printar Problema na linha
+    for (int i = 0; i < 9; i++){
+        for (int j = 0; j < 9; j++){
+            valida(Tabuleiro, i, j, 0, &reg, &quantidadeInvalidas, coodenadasInvalidas);
+            if(quantidadeInvalidas != 0){
+                printf("Linha %i: ", i+1);
+                PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);      
+            }
+        }        
+    }     
+
+    //Printar Problema na coluna
+    for (int i = 0; i < 9; i++){
+        for (int j = 0; j < 9; j++){
+            valida(Tabuleiro, j, i, 1, &reg, &quantidadeInvalidas, coodenadasInvalidas);
+            if(quantidadeInvalidas != 0){
+                printf("Coluna %i: ", i+1);
                 PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);      
             }
         }        
     } 
 
     //Printar Problema na regiao
-    // for (int i = 0; i < 9; i++){
-    //     for (int j = 0; j < 9; j++){
-    //         valida(Tabuleiro, i, j, 1, &reg, &quantidadeInvalidas, coodenadasInvalidas);
-    //         if(quantidadeInvalidas != 0){
-    //             printf("Regiao %i: ", reg+1);
-    //             PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);     
-    //         }
-    //     }        
-    // }  
+    for (int i = 0; i < 9; i++){
+        for (int j = 0; j < 9; j++){
+            valida(Tabuleiro, i, j, 2, &reg, &quantidadeInvalidas, coodenadasInvalidas);
+            if(quantidadeInvalidas != 0){
+                printf("Regiao %i: ", reg+1);
+                PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);     
+            }
+        }        
+    }  
 
     //Se não tiver Vazias ou Inválidas, printar sucesso
+    if(temVazia == 0 && quantidadeInvalidas == 0){
+        printf("Jogo completo. Voce ganhou!\n");
+        return 0;
+    }
     
-    //Se não tiver inválidas e tiver vazias, printar sugestões
 
-    // //Problemas
+    //Se não tiver inválidas e tiver vazias, printar sugestões
+    if(temVazia == 1 && quantidadeInvalidas == 0){
+        printf("Voce esta no caminho certo. Sugestoes:\n");
+
+        //Resolver (Ponto Extra)
+    }
+
+    //Problemas
     // desalocaTabuleiro(&Tabuleiro);
     // desalocaNomeArquivo(&nomeArquivo);
 
