@@ -1,6 +1,7 @@
 #include "tabuleiro.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 /*
 ARQUIVOS INTERMEDIÁRIOS
@@ -20,8 +21,11 @@ int main(int argc, char *argv[]) {
 
     QTabuleiro *Tabuleiro;
     char *nomeArquivo;
+    
     int temVazia;
-    int quantidadeInvalidas;
+    int quantidadeInvalidas = 0;
+    int coodenadasInvalidas[9][2];
+    int reg; 
 
     //Aloca Tabuleiro
     alocaTabuleiro(&Tabuleiro);
@@ -30,7 +34,7 @@ int main(int argc, char *argv[]) {
         alocaNomeArquivo(&nomeArquivo, strlen("tabuleiro.txt"));
         strcpy(nomeArquivo, "tabuleiro.txt");
     }
-    else{
+    else{       
         alocaNomeArquivo(&nomeArquivo, strlen(argv [1]));
         strcpy(nomeArquivo, argv[1]);
     }  
@@ -49,37 +53,35 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    //Função pra verificar se tem pelo menos 1 invalida e printar (Voce esta no caminho certo. Sugestoes:)
-
     //Printar Problema na linha
-    for (int i = 0; i < 9; i++){
-        for (int j = 0; j < 9; j++){
-            quantidadeInvalidas = EhValidoLinha(Tabuleiro, i, j);
-            if(quantidadeInvalidas != 0){
-                printf("Linha %i: ", i+1);
-                PrintInvalidas(Tabuleiro, i, j, 0, quantidadeInvalidas);      
-            }
-        }        
-    }     
+    // for (int i = 0; i < 9; i++){
+    //     for (int j = 0; j < 9; j++){
+    //         valida(Tabuleiro, i, j, 0, &reg, &quantidadeInvalidas, coodenadasInvalidas);
+    //         if(quantidadeInvalidas != 0){
+    //             printf("Linha %i: ", i+1);
+    //             PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);      
+    //         }
+    //     }        
+    // }     
 
-    //Printar Problema na coluna
+    // //Printar Problema na coluna
     for (int i = 0; i < 9; i++){
         for (int j = 0; j < 9; j++){
-            quantidadeInvalidas = EhValidoColuna(Tabuleiro, i, j);
+            valida(Tabuleiro, i, j, 1, &reg, &quantidadeInvalidas, coodenadasInvalidas);
             if(quantidadeInvalidas != 0){
-                printf("Coluna %i: ", i+1);
-                PrintInvalidas(Tabuleiro, i, j, 1, quantidadeInvalidas);      
+                printf("Coluna %i: ", j+1);
+                PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);      
             }
         }        
     } 
 
-    //Printar Problema na linha
+    //Printar Problema na regiao
     // for (int i = 0; i < 9; i++){
     //     for (int j = 0; j < 9; j++){
-    //         quantidadeInvalidas = EhValidoRegiao(Tabuleiro, i, j);
+    //         valida(Tabuleiro, i, j, 1, &reg, &quantidadeInvalidas, coodenadasInvalidas);
     //         if(quantidadeInvalidas != 0){
-    //             printf("Regiao %i: ", i+1);
-    //             PrintInvalidas(Tabuleiro, i, j, 2, quantidadeInvalidas);      
+    //             printf("Regiao %i: ", reg+1);
+    //             PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);     
     //         }
     //     }        
     // }  

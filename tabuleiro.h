@@ -27,16 +27,16 @@ void TabuleiroInicializa(char *nomeArquivo, QTabuleiro*);
 int defineVazias(QTabuleiro*, int lin, int col);
 
 //verifica se uma célula é válida na linha.
-int EhValidoLinha(QTabuleiro*, int lin, int col); 
+void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *quantidadeInvalidas, int coodenadasInvalidas[9][2]); 
 
 //verifica se uma célula é válida na Coluna.
 int EhValidoColuna(QTabuleiro*, int lin, int col); 
 
 //verifica se uma célula é válida na Região.
-int EhValidoRegiao(QTabuleiro*, int lin, int col); 
+int EhValidoRegiao(QTabuleiro*, int lin, int col, int *reg); 
 
 //Printa As coordenas das Regiões Invalidas
-void PrintInvalidas(QTabuleiro* Tabuleiro, int i, int j, int metodo, int quantidadeInvalidas);
+void PrintInvalidas(int quantidadeInvalidas, int coodenadasInvalidas[9][2]);
 
 // retorna todos os valores válidos para uma célula vazia.
 int* valoresValidos(QTabuleiro*);
