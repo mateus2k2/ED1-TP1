@@ -111,7 +111,8 @@ int main(int argc, char *argv[]) {
 
     //Se não tiver inválidas e tiver vazias, printar sugestões
     if(temVazia == 1 && quantidadeInvalidas == 0){
-        //printf("Voce esta no caminho certo. Sugestoes:\n");
+
+        
 
         //Resolver (Ponto Extra)
 

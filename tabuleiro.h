@@ -41,5 +41,8 @@ void PrintInvalidas(int quantidadeInvalidas, int coodenadasInvalidas[9][2]);
 // retorna todos os valores válidos para uma célula vazia.
 int* valoresValidos(QTabuleiro*);
 
+//Printa as sugestoes
+void printSugestoes(QTabuleiro* tabuleiro, int coodenadasInvalidas[9][2];
+
 
 #endif //TabuleiroH

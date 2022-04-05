@@ -80,7 +80,6 @@ void TabuleiroInicializa(char *nomeArquivo, QTabuleiro* Tabuleiro){
 int defineVazias(QTabuleiro* Tabuleiro, int lin, int col){
 
   if((*Tabuleiro).celulas[lin][col].conteudo == 0){
-    // (*Tabuleiro).celulas[lin][col].estado[0] = -1;
     return 1;
   }
   return 0;
@@ -227,6 +226,59 @@ void PrintInvalidas(int quantidadeInvalidas, int coodenadasInvalidas[9][2]){
       printf(" e ");
   }
 
-}      
+} 
 
+void printSugestoes(QTabuleiro* tabuleiro, int cordValidas[9][2]){
+  int contadorVazias = 0, **coordVazias;
+  int i, j;
+  //verificando quantas casa estao vazias para alocar a matriz de cordenadas vazias
+  for (i = 0; i < 9; i++){
+    for(j = 0; j < 9; j++){
+      if(defineVazias(tabuleiro, i, j) == 1){
+        contadorVazias++;
+      }
+    }
+  }
 
+  //alocando a matriz de cordenadas vazias
+  coordVazias = malloc(contadorVazias);
+  *coordVazias = malloc(2);
+
+  //preenchendo o vetor com as coordenadas vazias
+  for (i = 0; i < 9; i++){
+    for(j = 0; j < 9; j++){
+      if(defineVazias(tabuleiro, i, j) == 1){
+        coordVazias[sizeof(coordVazias) - contadorVazias][0] = i;
+        coordVazias[sizeof(coordVazias) - contadorVazias][1] = j;
+      }
+    }
+  }
+
+  //verificando os numeros pissiveis
+  for(i = 0; i < sizeof(coordVazias); i++){
+    printf("(%d,%d):  ",coordVazias[i][0],coordVazias[i][1]);
+    int possibilidade = 1, verificador;
+
+    
+    do{
+      
+      for(j = 0; j < 9; j++){
+          if(possibilidade == tabuleiro->celulas[coordVazias[i][0]][j].conteudo){
+            possibilidade++;
+            break;
+          }else if(possibilidade == tabuleiro->celulas[j][coordVazias[i][0]].conteudo){
+            possibilidade++;
+            break;
+          }else for(int k = 0; k < 9; k++) if(j == 8){
+            printf(" %d", possibilidade);
+          }
+      }
+    }while(possibilidade != 9);
+    
+    
+    
+  }
+  
+
+  
+}
