@@ -1,16 +1,17 @@
 #include "tabuleiro.h"
+#include "solver.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 /*
 ARQUIVOS INTERMEDIÁRIOS
-gcc -c tabuleiro.c -Wall
-gcc -c main.c -Wall
+gcc -c tabuleiro.c tabuleiro.o -Wall
+gcc -c main.c tabuleiro.o -Wall
 LINKAR ARQUIVOS
 gcc tabuleiro.o main.o -o exe
 EXECUTAR
-./exe
+./exe.exe
 
 COMPILAR TUDO DE UMA VEZ
 gcc *.c -o exe
@@ -110,9 +111,16 @@ int main(int argc, char *argv[]) {
 
     //Se não tiver inválidas e tiver vazias, printar sugestões
     if(temVazia == 1 && quantidadeInvalidas == 0){
-        printf("Voce esta no caminho certo. Sugestoes:\n");
+
+        
 
         //Resolver (Ponto Extra)
+
+        if (solve(Tabuleiro))
+            imprimeTabuleiro(Tabuleiro);
+        else
+            printf("\n\nNO SOLUTION FOUND\n\n");
+            
     }
 
     //Problemas
