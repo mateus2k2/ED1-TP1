@@ -102,7 +102,7 @@ void imprimeTabuleiro(QTabuleiro *tabuleiro){
   }
 }
 
-//abstrair em uma unica funçao
+//abstraire m uma unica funçao
 int EhValidoLinha(QTabuleiro* Tabuleiro, int lin, int col){
 
   int retorno = 0;  
@@ -172,9 +172,11 @@ void PrintInvalidas(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int qua
           printf("\n");
           break;
         }
+
         else
           printf(" e ");
       }
+
     }
   }
 
@@ -199,5 +201,3 @@ void PrintInvalidas(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int qua
 
 
 }      
-
-
