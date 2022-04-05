@@ -1,4 +1,5 @@
 #include "tabuleiro.h"
+
 #include "solver.h"
 #include <stdio.h>
 #include <string.h>
@@ -24,6 +25,7 @@ int main(int argc, char *argv[]) {
     char *nomeArquivo;
     
     int temVazia = 0;
+    int temInvalidas = 0;
     int reg; 
 
     int coodenadasInvalidas[9][2];
@@ -61,6 +63,7 @@ int main(int argc, char *argv[]) {
             valida(Tabuleiro, i, j, 3, &reg, &quantidadeInvalidas, coodenadasInvalidas);
             if(quantidadeInvalidas != 0){
                 printf("Alguma coisa deu errado... Invalidos:\n");
+                temInvalidas = 1;
                 break;
             }
         }    
@@ -103,16 +106,14 @@ int main(int argc, char *argv[]) {
     }  
 
     //Se não tiver Vazias ou Inválidas, printar sucesso
-    if(temVazia == 0 && quantidadeInvalidas == 0){
+    if(temVazia == 0 && temInvalidas == 0){
         printf("Jogo completo. Voce ganhou!\n");
         return 0;
     }
     
 
     //Se não tiver inválidas e tiver vazias, printar sugestões
-    if(temVazia == 1 && quantidadeInvalidas == 0){
-
-        
+    if(temVazia == 1 && temInvalidas == 0){
 
         //Resolver (Ponto Extra)
 

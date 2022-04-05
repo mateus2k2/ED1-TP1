@@ -6,6 +6,8 @@
 struct celula{
   //conteudo da celula (int 1 a 9)
   int conteudo;
+  int regiao;
+
   int invalidoLinha;
   int invalidoColuna;
   int invalidoRegiao;

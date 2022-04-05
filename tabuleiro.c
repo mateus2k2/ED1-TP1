@@ -5,15 +5,10 @@
 #include<string.h>
 #include<math.h>
 
-//Fazer as Funções EhValidoXXX Retornar um vetor de coodenadas (passar ponteiro) e uma quantidade (passar como ponteiro) para depois imprimir so as coordenadas
-// struct coodernada{
-//   int lin;
-//   int col;
-// };
-
 struct celula{
   //conteudo da celula (int 1 a 9)
   int conteudo;
+  int regiao;
 
   int invalidoLinha;
   int invalidoColuna;
@@ -104,7 +99,8 @@ void imprimeTabuleiro(QTabuleiro *tabuleiro){
         printf("\n   -----------------------");
       }
     printf("\n");
-  }
+  }  
+
 }
 
 void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *quantidadeInvalidas, int coodenadasInvalidas[9][2]){
@@ -174,6 +170,8 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
       (*reg) = 7;
     else if(lin >= 6 && col >= 6)
       (*reg) = 8;
+
+    (*Tabuleiro).celulas[lin][col].regiao = (*reg);
 
     for (int j = offset[(*reg)][0]; j < offset[(*reg)][0]+3; j++){
       for (int k = offset[(*reg)][1]; k < offset[(*reg)][1]+3; k++){
