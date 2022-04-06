@@ -54,22 +54,24 @@ void TabuleiroInicializa(char *nomeArquivo, QTabuleiro* Tabuleiro){
   int valor;
   char tmp;
 
+  //Abre o arquivo
   arquivo = fopen(nomeArquivo, "r");
 
-  if (NULL == arquivo) {
+  if (NULL == arquivo){
+      //Se nao for possivel encerra o programa
       printf("Arquivo nao pode ser aberto\n");
       exit(1);
   }
 
   for (int i = 0; i < 9; i++){
     for (int j = 0; j < 9; j++){
+      //Le o valor (em valor) e o espaço (em tmp)
       fscanf(arquivo, "%d%c", &valor, &tmp);
     
       (*Tabuleiro).celulas[i][j].conteudo = valor;
       
     }
   }
-  
 }
 
 int defineVazias(QTabuleiro* Tabuleiro, int lin, int col){
@@ -108,12 +110,17 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
   (*quantidadeInvalidas) = 0;
   int offset[9][2] = {{0,0}, {0,3}, {0, 6}, {3, 0}, {3, 3}, {3, 6}, {6,0}, {6,3}, {6,6}};
 
+  //Metodo 3 = verifica se tem ao menos 1 erro
+
   //Valida Linha
   if(metodo == 0 || metodo == 3){
+    //Percorre toda a linha
     for (int i = 0; i < 9; i++){
+      //Verifica a celula atual contra todas da linha menos ela mesma
       if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != col && 
         (*Tabuleiro).celulas[lin][i].invalidoLinha != 1 && (*Tabuleiro).celulas[lin][i].conteudo != 0){
           
+        //Preenche o vetor de invalidas. Deixa a primeira posição vazia
         coodenadasInvalidas[(*quantidadeInvalidas)+1][0] = lin;
         coodenadasInvalidas[(*quantidadeInvalidas)+1][1] = i;
 
@@ -122,6 +129,7 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
         if(metodo == 3)
           break;        
 
+        //Marca como invalida para não verificar essa posição novamente
         (*Tabuleiro).celulas[lin][i].invalidoLinha = 1;
         
       }
@@ -131,10 +139,13 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
 
   //Valida Coluna
   if(metodo == 1 || metodo == 3){
+    //Percorre toda a coluna
     for (int i = 0; i < 9; i++){
+      //Verifica a celula atual contra todas da coluna menos ela mesma
       if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != lin && 
         (*Tabuleiro).celulas[i][col].invalidoColuna != 1 && (*Tabuleiro).celulas[i][col].conteudo != 0){
       
+        //Preenche o vetor de invalidas. Deixa a primeira posição vazia
         coodenadasInvalidas[(*quantidadeInvalidas)+1][0] = i;
         coodenadasInvalidas[(*quantidadeInvalidas)+1][1] = col;
 
@@ -143,6 +154,7 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
         if(metodo == 3)
           break;
 
+        //Marca como invalida para não verificar essa posição novamente
         (*Tabuleiro).celulas[i][col].invalidoColuna = 1;
 
       }
@@ -151,7 +163,7 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
 
   //Verifica Região
   if(metodo == 2 || metodo == 3){
-    //verificar em qual região estou
+    //verificar em qual região esta
     if(lin < 3 && col < 3)
       (*reg) = 0;
     else if(lin < 3 && col >= 3 && col < 6)
@@ -171,13 +183,17 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
     else if(lin >= 6 && col >= 6)
       (*reg) = 8;
 
+    //Preenche o campo região com reg (0 a 8)
     (*Tabuleiro).celulas[lin][col].regiao = (*reg);
 
+    //Percorre toda a região. Começando de acordo com qual região esta e indo 3 posições a mais
     for (int j = offset[(*reg)][0]; j < offset[(*reg)][0]+3; j++){
       for (int k = offset[(*reg)][1]; k < offset[(*reg)][1]+3; k++){
+        //Verifica a celula atual contra todas da região menos ela mesma
         if((*Tabuleiro).celulas[j][k].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && ((j != lin && k != col) || (j == lin && k != col) || (j != lin && k == col) ) 
           && (*Tabuleiro).celulas[j][k].invalidoRegiao != 1 && (*Tabuleiro).celulas[j][k].conteudo != 0){
           
+          //Preenche o vetor de invalidas. Deixa a primeira posição vazia
           coodenadasInvalidas[(*quantidadeInvalidas)+1][0] = j;
           coodenadasInvalidas[(*quantidadeInvalidas)+1][1] = k;          
 
@@ -186,6 +202,7 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
           if(metodo == 3)
             break;
 
+          //Marca como invalida para não verificar essa posição novamente
           (*Tabuleiro).celulas[j][k].invalidoRegiao = 1;
           
         }
@@ -193,11 +210,13 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
     } 
   }
 
-  //Verificação para Todos
+  //Verificação para Todos. Entra se encontrou um invalida
   if(*quantidadeInvalidas != 0){
+    //Coloca a celula atual na primeira posição do vetor de invalidas
     coodenadasInvalidas[0][0] = lin;
     coodenadasInvalidas[0][1] = col;
 
+    //Marca ela como invalida na linha, coluna ou região
     if(metodo == 0)
       (*Tabuleiro).celulas[lin][col].invalidoLinha = 1;
     else if(metodo == 1)
@@ -216,6 +235,7 @@ void PrintInvalidas(int quantidadeInvalidas, int coodenadasInvalidas[9][2]){
   for (int i = 0; i < 9; i++){
     printf("(%i, %i)", (coodenadasInvalidas)[i][0]+1, (coodenadasInvalidas)[i][1]+1);
 
+    //Se for a ultima print um /n e não print um "e"
     if(i + 1 == quantidadeInvalidas){
       printf("\n");
       break;

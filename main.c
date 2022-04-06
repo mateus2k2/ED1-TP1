@@ -8,11 +8,12 @@
 /*
 ARQUIVOS INTERMEDIÁRIOS
 gcc -c tabuleiro.c tabuleiro.o -Wall
-gcc -c main.c tabuleiro.o -Wall
+gcc -c main.c main.o -Wall
+gcc -c solver.c solver.o -Wall
 LINKAR ARQUIVOS
-gcc tabuleiro.o main.o -o exe
+gcc tabuleiro.o main.o solver.o -o exe
 EXECUTAR
-./exe.exe
+./exe
 
 COMPILAR TUDO DE UMA VEZ
 gcc *.c -o exe
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]) {
     //Inicializa Tabuleiro como nome do arquivo do argv
     TabuleiroInicializa(nomeArquivo, Tabuleiro);
 
-    //Mostra p tabuleiro
+    //Mostra tabuleiro
     imprimeTabuleiro(Tabuleiro);
 
     //Verificar se tem celulas vazias
@@ -72,6 +73,7 @@ int main(int argc, char *argv[]) {
     }
 
     quantidadeInvalidas = 0;
+
     //Printar Problema na linha
     for (int i = 0; i < 9; i++){
         for (int j = 0; j < 9; j++){
@@ -115,8 +117,8 @@ int main(int argc, char *argv[]) {
     //Se não tiver inválidas e tiver vazias, printar sugestões
     if(temVazia == 1 && temInvalidas == 0){
 
-        //Resolver (Ponto Extra)
 
+        //Resolver (Ponto Extra)
         if (solve(Tabuleiro))
             imprimeTabuleiro(Tabuleiro);
         else
@@ -124,9 +126,9 @@ int main(int argc, char *argv[]) {
             
     }
 
-    //Problemas
-    // desalocaTabuleiro(&Tabuleiro);
-    // desalocaNomeArquivo(&nomeArquivo);
+    //Desalocações
+    desalocaTabuleiro(&Tabuleiro);
+    desalocaNomeArquivo(&nomeArquivo);
 
 
     return 0;
