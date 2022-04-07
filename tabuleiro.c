@@ -14,8 +14,7 @@ struct celula{
   int invalidoColuna;
   int invalidoRegiao;
 
-  int verificaLinha [9];
-  int verificaColuna [9];
+  int verifica [9];
   int contadorValida;
 
 
@@ -81,7 +80,7 @@ void TabuleiroInicializa(char *nomeArquivo, QTabuleiro* Tabuleiro){
 
 int defineVazias(QTabuleiro* Tabuleiro, int lin, int col){
 
-  if((*Tabuleiro).celulas[lin][col].conteudo == 0){
+  if(Tabuleiro->celulas[lin][col].conteudo == 0){
     return 1;
   }
   return 0;
@@ -91,13 +90,13 @@ void imprimeTabuleiro(QTabuleiro *tabuleiro){
 
   for(int i = 0; i < 9; i++){
     if(i == 0){
-      printf("   1 2 3   4 5 6   7 8 9\n   -----------------------\n");
+      printf("    1 2 3   4 5 6   7 8 9\n   -----------------------\n");
     }
     for(int j = 0; j < 9; j++){
       if(j == 0){
         printf("%d | ", (i+1));
       }
-      printf("%d ",(*tabuleiro).celulas[i][j].conteudo);
+      tabuleiro->celulas[i][j].conteudo == 0 ? printf("  ") : printf("%d ",tabuleiro->celulas[i][j].conteudo);
       if(j == 2 || j == 5 || j == 8){
         printf("| ");
       }
@@ -235,7 +234,7 @@ void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *
 }
 
 void PrintInvalidas(int quantidadeInvalidas, int coodenadasInvalidas[9][2]){
-
+  
   //Printar Linha
   for (int i = 0; i < 9; i++){
     printf("(%i, %i)", (coodenadasInvalidas)[i][0]+1, (coodenadasInvalidas)[i][1]+1);
@@ -252,6 +251,9 @@ void PrintInvalidas(int quantidadeInvalidas, int coodenadasInvalidas[9][2]){
 } 
 
 void printSugestoes(QTabuleiro* tabuleiro){
+
+  printf("\nVoce esta no caminho certo. Sugestoes:\n");
+
   int contadorVazias = 0, **coordVazias;
   int i, j;
   //verificando quantas casa estao vazias para alocar a matriz de cordenadas vazias
@@ -265,9 +267,13 @@ void printSugestoes(QTabuleiro* tabuleiro){
     //   printf(" e ");
   }
 
+
   //alocando a matriz de cordenadas vazias
-  coordVazias = malloc(contadorVazias);
-  *coordVazias = malloc(2);
+  coordVazias = (int**)malloc(contadorVazias * sizeof(int *));
+  for(i = 0; i<contadorVazias; i++){
+    coordVazias[i] = (int*)malloc(2 * sizeof(int));
+  }
+
 
   //preenchendo o vetor com as coordenadas vazias
   int cont = 0;
@@ -284,32 +290,43 @@ void printSugestoes(QTabuleiro* tabuleiro){
   //verificando os numeros pissiveis
   int result = 0;
   for(i = 0; i < contadorVazias; i++){
-    printf("(%d,%d):  ",coordVazias[i][0],coordVazias[i][1]);
+    printf("(%d,%d): ",coordVazias[i][0] + 1,coordVazias[i][1] + 1);
 
     //verificando linha
-    for(int celula = 0; celula < 9; celula ++){
-      result = (tabuleiro->celulas[coordVazias[i][0]][celula].conteudo - 1);
-      tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verificaLinha[result] = 0;
+    for(int coluna = 0; coluna < 9; coluna++){
+      result = (tabuleiro->celulas[coordVazias[i][0]][coluna].conteudo - 1);
+      if(result >= 0)     
+        tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verifica[result] = 0;
+      else
+        tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verifica[result] = 1;
     }
     //verificando coluna
-    for(int celula = 0; celula < 9; celula ++){
-      result = (tabuleiro->celulas[celula][coordVazias[i][1]].conteudo - 1);
-      tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verificaColuna[result] = 0;
+    for(int linha = 0; linha < 9; linha ++){
+      result = (tabuleiro->celulas[linha][coordVazias[i][1]].conteudo - 1);
+      if(result >= 0)
+        tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verifica[result] = 0;
+      else
+        tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verifica[result] = 1;
     }
     //verificando regiao
-
-    //printando o resultado
-    for(int celula = 0; celula < 9; celula++)
-    if(tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verificaColuna[celula] != 0){
-
+    for(int linha = 0; linha < 9; linha ++){
+      for (int coluna = 0; coluna < 9; coluna++){
+        if(tabuleiro->celulas[linha][coluna].regiao ==  tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].regiao){
+          result = (tabuleiro->celulas[linha][coluna].conteudo - 1);
+          if(result >= 0)
+            tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verifica[result] = 0;
+          else
+            tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verifica[result] = 1;
+        }
+      }
     }
 
-    
-    
-    
-    
+    //printando o resultado
+    for(int livre = 0; livre < 9; livre++){
+      if(tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verifica[livre] != 0){
+        printf("%d ", livre+1);
+      }
+    }
+    printf("\n");
   }
-  
-
-  
 }
