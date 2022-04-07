@@ -116,7 +116,8 @@ int main(int argc, char *argv[]) {
 
     //Se não tiver inválidas e tiver vazias, printar sugestões
     if(temVazia == 1 && temInvalidas == 0){
-
+        
+        printSugestoes(Tabuleiro);
 
         //Resolver (Ponto Extra)
         if (solve(Tabuleiro))

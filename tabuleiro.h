@@ -42,7 +42,7 @@ void PrintInvalidas(int quantidadeInvalidas, int coodenadasInvalidas[9][2]);
 int* valoresValidos(QTabuleiro*);
 
 //Printa as sugestoes
-void printSugestoes(QTabuleiro* tabuleiro, int coodenadasInvalidas[9][2]);
+void printSugestoes(QTabuleiro* tabuleiro);
 
 
 #endif //TabuleiroH
