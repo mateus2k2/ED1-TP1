@@ -1,12 +1,6 @@
 *.exe
-<<<<<<< HEAD
-*.o
-TP1.pdf
-.vscode/
-=======
 exe.exe
 *.o
 TP1.pdf
 .vscode/
 ED1-TP1/
->>>>>>> 50ee1f8c51c18aae1def39b5feffc6aebb59f9c2

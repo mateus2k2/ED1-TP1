@@ -14,6 +14,11 @@ struct celula{
   int invalidoColuna;
   int invalidoRegiao;
 
+  int verificaLinha [9];
+  int verificaColuna [9];
+  int contadorValida;
+
+
 };
 
 struct tabuleiro{
@@ -246,7 +251,7 @@ void PrintInvalidas(int quantidadeInvalidas, int coodenadasInvalidas[9][2]){
 
 } 
 
-void printSugestoes(QTabuleiro* tabuleiro, int cordValidas[9][2]){
+void printSugestoes(QTabuleiro* tabuleiro){
   int contadorVazias = 0, **coordVazias;
   int i, j;
   //verificando quantas casa estao vazias para alocar a matriz de cordenadas vazias
@@ -265,35 +270,41 @@ void printSugestoes(QTabuleiro* tabuleiro, int cordValidas[9][2]){
   *coordVazias = malloc(2);
 
   //preenchendo o vetor com as coordenadas vazias
+  int cont = 0;
   for (i = 0; i < 9; i++){
     for(j = 0; j < 9; j++){
       if(defineVazias(tabuleiro, i, j) == 1){
-        coordVazias[sizeof(coordVazias) - contadorVazias][0] = i;
-        coordVazias[sizeof(coordVazias) - contadorVazias][1] = j;
+        coordVazias[cont][0] = i;
+        coordVazias[cont][1] = j;
+        cont++;
       }
     }
   }
 
   //verificando os numeros pissiveis
-  for(i = 0; i < sizeof(coordVazias); i++){
+  int result = 0;
+  for(i = 0; i < contadorVazias; i++){
     printf("(%d,%d):  ",coordVazias[i][0],coordVazias[i][1]);
-    int possibilidade = 1, verificador;
+
+    //verificando linha
+    for(int celula = 0; celula < 9; celula ++){
+      result = (tabuleiro->celulas[coordVazias[i][0]][celula].conteudo - 1);
+      tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verificaLinha[result] = 0;
+    }
+    //verificando coluna
+    for(int celula = 0; celula < 9; celula ++){
+      result = (tabuleiro->celulas[celula][coordVazias[i][1]].conteudo - 1);
+      tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verificaColuna[result] = 0;
+    }
+    //verificando regiao
+
+    //printando o resultado
+    for(int celula = 0; celula < 9; celula++)
+    if(tabuleiro->celulas[coordVazias[i][0]][coordVazias[i][1]].verificaColuna[celula] != 0){
+
+    }
 
     
-    do{
-      
-      for(j = 0; j < 9; j++){
-          if(possibilidade == tabuleiro->celulas[coordVazias[i][0]][j].conteudo){
-            possibilidade++;
-            break;
-          }else if(possibilidade == tabuleiro->celulas[j][coordVazias[i][0]].conteudo){
-            possibilidade++;
-            break;
-          }else for(int k = 0; k < 9; k++) if(j == 8){
-            printf(" %d", possibilidade);
-          }
-      }
-    }while(possibilidade != 9);
     
     
     
