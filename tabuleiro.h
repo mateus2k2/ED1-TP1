@@ -5,8 +5,8 @@
 // typedef struct turma TTurma;
 
 typedef struct celula QCelula;
-typedef struct quadrante Qquadrante;
 typedef struct tabuleiro QTabuleiro;
+typedef struct coordenada QCoordenada;
 
 
 void alocaTabuleiro(QTabuleiro**);
@@ -15,34 +15,21 @@ void desalocaTabuleiro(QTabuleiro**);
 void alocaNomeArquivo(char **nomeArquivo, int qtd);
 void desalocaNomeArquivo(char **nomeArquivo);
 
-void alocaCelula(QCelula **Celula);
-void desalocacelula(QCelula **Celula);
+int** alocaMatriz(int lin, int col);
+void desalocaMatriz(int **mat, int lin);
 
-void imprimeTabuleiro(QTabuleiro*);
-
-//inicializa tabuleiro a partir de arquivo
 void TabuleiroInicializa(char *nomeArquivo, QTabuleiro*);
 
-// //retorna célula vazias do tabuleiro.
+int verificaCelula(QTabuleiro* Tabuleiro, int lin, int col, int metodo);
+
+int EhValido(QTabuleiro* Tabuleiro);
+int** encontraInvalidos(QTabuleiro* Tabuleiro, int lin, int col, int metodo);
+void PrintInvalidas(int** CoordenadasInvalidas, int local, int numero);
+
 int defineVazias(QTabuleiro*, int lin, int col);
-
-//verifica se uma célula é válida na linha.
-void valida(QTabuleiro* Tabuleiro, int lin, int col, int metodo, int *reg, int *quantidadeInvalidas, int coodenadasInvalidas[9][2]); 
-
-//verifica se uma célula é válida na Coluna.
-int EhValidoColuna(QTabuleiro*, int lin, int col); 
-
-//verifica se uma célula é válida na Região.
-int EhValidoRegiao(QTabuleiro*, int lin, int col, int *reg); 
-
-//Printa As coordenas das Regiões Invalidas
-void PrintInvalidas(int quantidadeInvalidas, int coodenadasInvalidas[9][2]);
-
-// retorna todos os valores válidos para uma célula vazia.
-int* valoresValidos(QTabuleiro*);
-
-//Printa as sugestoes
 void printSugestoes(QTabuleiro* tabuleiro);
 
+
+void imprimeTabuleiro(QTabuleiro *tabuleiro);
 
 #endif //TabuleiroH

@@ -27,10 +27,6 @@ int main(int argc, char *argv[]) {
     
     int temVazia = 0;
     int temInvalidas = 0;
-    int reg; 
-
-    int coodenadasInvalidas[9][2];
-    int quantidadeInvalidas = 0;
 
     //Aloca Tabuleiro
     alocaTabuleiro(&Tabuleiro);
@@ -47,9 +43,6 @@ int main(int argc, char *argv[]) {
     //Inicializa Tabuleiro como nome do arquivo do argv
     TabuleiroInicializa(nomeArquivo, Tabuleiro);
 
-    //Mostra tabuleiro
-    imprimeTabuleiro(Tabuleiro);
-
     //Verificar se tem celulas vazias
     for (int i = 0; i < 9; i++){
         for (int j = 0; j < 9; j++){
@@ -58,65 +51,21 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    //Printar Mensagem de erro
-    for (int i = 0; i < 9; i++){
-        for (int j = 0; j < 9; j++){
-            valida(Tabuleiro, i, j, 3, &reg, &quantidadeInvalidas, coodenadasInvalidas);
-            if(quantidadeInvalidas != 0){
-                printf("Alguma coisa deu errado... Invalidos:\n");
-                temInvalidas = 1;
-                break;
-            }
-        }    
-        if(quantidadeInvalidas != 0)
-            break;;
-    }
+    //------------------------------------------------------------------------------------------------------------------------
 
-    quantidadeInvalidas = 0;
-
-    //Printar Problema na linha
-    for (int i = 0; i < 9; i++){
-        for (int j = 0; j < 9; j++){
-            valida(Tabuleiro, i, j, 0, &reg, &quantidadeInvalidas, coodenadasInvalidas);
-            if(quantidadeInvalidas != 0){
-                printf("Linha %i: ", i+1);
-                PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);      
-            }
-        }        
-    }     
-
-    //Printar Problema na coluna
-    for (int i = 0; i < 9; i++){
-        for (int j = 0; j < 9; j++){
-            valida(Tabuleiro, j, i, 1, &reg, &quantidadeInvalidas, coodenadasInvalidas);
-            if(quantidadeInvalidas != 0){
-                printf("Coluna %i: ", i+1);
-                PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);      
-            }
-        }        
-    } 
-
-    //Printar Problema na regiao
-    for (int i = 0; i < 9; i++){
-        for (int j = 0; j < 9; j++){
-            valida(Tabuleiro, i, j, 2, &reg, &quantidadeInvalidas, coodenadasInvalidas);
-            if(quantidadeInvalidas != 0){
-                printf("Regiao %i: ", reg+1);
-                PrintInvalidas(quantidadeInvalidas, coodenadasInvalidas);     
-            }
-        }        
-    }  
-
+    if(EhValido(Tabuleiro) == 0)
+        temInvalidas = 1;
+  
     //Se não tiver Vazias ou Inválidas, printar sucesso
-    if(temVazia == 0 && temInvalidas == 0){
+    else if(temVazia == 0 && temInvalidas == 0){
         printf("Jogo completo. Voce ganhou!\n");
         return 0;
     }
-    
 
-    //Se não tiver inválidas e tiver vazias, printar sugestões
-    if(temVazia == 1 && temInvalidas == 0){
+    //Se não tiver inválidas e tiver vazias, printar sugestões  e solução
+    else if(temVazia == 1 && temInvalidas == 0){
         
+        //Printe Sugestões
         printSugestoes(Tabuleiro);
 
         //Resolver (Ponto Extra)
@@ -124,8 +73,11 @@ int main(int argc, char *argv[]) {
             imprimeTabuleiro(Tabuleiro);
         else
             printf("\n\nNO SOLUTION FOUND\n\n");
-            
     }
+    
+    //------------------------------------------------------------------------------------------------------------------------
+
+    imprimeTabuleiro(Tabuleiro);
 
     //Desalocações
     desalocaTabuleiro(&Tabuleiro);
