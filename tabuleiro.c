@@ -244,11 +244,11 @@ int** encontraInvalidos(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
   //Verifica Região
   if(metodo == 2){
     for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ 
-        (*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].invalidoRegiao = 1;
+      if((*Tabuleiro).celulas[cantoX + (i / 3)][cantoY + (i % 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ 
+        (*Tabuleiro).celulas[cantoX + (i / 3)][cantoY + (i % 3)].invalidoRegiao = 1;
 
-        CoordenadasInvalidas[k][0] = cantoX + (i % 3);
-        CoordenadasInvalidas[k][1] = cantoY + (i / 3);
+        CoordenadasInvalidas[k][0] = cantoX + (i / 3);
+        CoordenadasInvalidas[k][1] = cantoY + (i % 3);
         k++;
       }
     } 
