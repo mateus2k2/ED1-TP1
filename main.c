@@ -43,8 +43,6 @@ int main(int argc, char *argv[]) {
     //Inicializa Tabuleiro como nome do arquivo do argv
     TabuleiroInicializa(nomeArquivo, Tabuleiro);
 
-    imprimeTabuleiro(Tabuleiro);
-
     //Verificar se tem celulas vazias
     for (int i = 0; i < 9; i++){
         for (int j = 0; j < 9; j++){
