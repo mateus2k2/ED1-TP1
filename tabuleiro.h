@@ -4,13 +4,11 @@
 // typedef struct aluno TAluno;
 // typedef struct turma TTurma;
 
-typedef struct celula QCelula;
-typedef struct tabuleiro QTabuleiro;
-typedef struct coordenada QCoordenada;
+typedef struct celula TADCelula;
+typedef struct tabuleiro TADTabuleiro;
 
-
-void alocaTabuleiro(QTabuleiro**);
-void desalocaTabuleiro(QTabuleiro**);
+void alocaTabuleiro(TADTabuleiro**);
+void desalocaTabuleiro(TADTabuleiro**);
 
 void alocaNomeArquivo(char **nomeArquivo, int qtd);
 void desalocaNomeArquivo(char **nomeArquivo);
@@ -18,18 +16,17 @@ void desalocaNomeArquivo(char **nomeArquivo);
 int** alocaMatriz(int lin, int col);
 void desalocaMatriz(int **mat, int lin);
 
-void TabuleiroInicializa(char *nomeArquivo, QTabuleiro*);
+void TabuleiroInicializa(char *nomeArquivo, TADTabuleiro*);
 
-int verificaCelula(QTabuleiro* Tabuleiro, int lin, int col, int metodo);
+int verificaCelula(TADTabuleiro* Tabuleiro, int lin, int col, int metodo);
 
-int EhValido(QTabuleiro* Tabuleiro);
-int** encontraInvalidos(QTabuleiro* Tabuleiro, int lin, int col, int metodo);
+int EhValido(TADTabuleiro* Tabuleiro);
+int** encontraInvalidos(TADTabuleiro* Tabuleiro, int lin, int col, int metodo);
 void PrintInvalidas(int** CoordenadasInvalidas, int local, int numero);
 
-int defineVazias(QTabuleiro*, int lin, int col);
-void printSugestoes(QTabuleiro* tabuleiro);
+int defineVazias(TADTabuleiro*, int lin, int col);
+void printSugestoes(TADTabuleiro* tabuleiro);
 
-
-void imprimeTabuleiro(QTabuleiro *tabuleiro);
+void imprimeTabuleiro(TADTabuleiro *tabuleiro);
 
 #endif //TabuleiroH

@@ -6,7 +6,6 @@
 struct celula{
   //conteudo da celula (int 1 a 9)
   int conteudo;
-  int regiao;
 
   int invalidoLinha;
   int invalidoColuna;
@@ -19,7 +18,7 @@ struct tabuleiro{
   struct celula celulas[9][9];
 };
 
-int valid(QTabuleiro* Tabuleiro, int row, int column, int guess) {
+int valid(TADTabuleiro* Tabuleiro, int row, int column, int guess) {
   int corner_x = row / 3 * 3;
   int corner_y = column / 3 * 3;
 
@@ -31,7 +30,7 @@ int valid(QTabuleiro* Tabuleiro, int row, int column, int guess) {
   return 1;
 }
 
-int find_empty_cell(QTabuleiro* Tabuleiro, int *row, int *column) {
+int find_empty_cell(TADTabuleiro* Tabuleiro, int *row, int *column) {
   for (int x = 0; x < 9; x++) {
     for (int y = 0; y < 9; y++) {
       if (!(*Tabuleiro).celulas[x][y].conteudo) {
@@ -45,7 +44,7 @@ int find_empty_cell(QTabuleiro* Tabuleiro, int *row, int *column) {
   return 0;
 }
 
-int solve(QTabuleiro* Tabuleiro) {
+int solve(TADTabuleiro* Tabuleiro) {
   int row;
   int column;
 

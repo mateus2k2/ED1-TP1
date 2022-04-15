@@ -8,7 +8,6 @@
 struct celula{
   //conteudo da celula (int 1 a 9)
   int conteudo;
-  int regiao;
 
   int invalidoLinha;
   int invalidoColuna;
@@ -20,9 +19,9 @@ struct tabuleiro{
   struct celula celulas[9][9];
 };
 
-void alocaTabuleiro(QTabuleiro **Tabuleiro){
+void alocaTabuleiro(TADTabuleiro **Tabuleiro){
   
-  *Tabuleiro = (QTabuleiro*) malloc(sizeof(QTabuleiro));
+  *Tabuleiro = (TADTabuleiro*) malloc(sizeof(TADTabuleiro));
 
   if (*Tabuleiro == NULL ) {
     printf ("Memoria insuficiente !\n");
@@ -30,7 +29,7 @@ void alocaTabuleiro(QTabuleiro **Tabuleiro){
   } 
 }
 
-void desalocaTabuleiro(QTabuleiro **Tabuleiro) {
+void desalocaTabuleiro(TADTabuleiro **Tabuleiro) {
   free(*Tabuleiro);
 }
 
@@ -66,7 +65,7 @@ void desalocaMatriz(int **mat, int lin){
     free(mat);
 }
 
-void TabuleiroInicializa(char *nomeArquivo, QTabuleiro* Tabuleiro){
+void TabuleiroInicializa(char *nomeArquivo, TADTabuleiro* Tabuleiro){
 
   FILE* arquivo;
   int valor;
@@ -92,19 +91,11 @@ void TabuleiroInicializa(char *nomeArquivo, QTabuleiro* Tabuleiro){
   }
 }
 
-int defineVazias(QTabuleiro* Tabuleiro, int lin, int col){
-
-  if(Tabuleiro->celulas[lin][col].conteudo == 0){
-    return 1;
-  }
-  return 0;
-}
-
-int verificaCelula(QTabuleiro* Tabuleiro, int lin, int col, int metodo){
+int verificaCelula(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
 
   int retorno = 1;
-  int corner_x = lin / 3 * 3;
-  int corner_y = col / 3 * 3;
+  int cantoX = lin / 3 * 3;
+  int cantoY = col / 3 * 3;
 
   //Verifica Linha
   if(metodo == 0 || metodo == 3){
@@ -142,9 +133,9 @@ int verificaCelula(QTabuleiro* Tabuleiro, int lin, int col, int metodo){
   else if(metodo == 2 || metodo == 3){
     //Percorre toda a região. Começando de acordo com qual região esta e indo 3 posições a mais
     for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[corner_x + (i % 3)][corner_y + (i / 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo //Verifica o conteudo
-        && ((corner_x + (i % 3) != lin && corner_y + (i / 3) != col) || (corner_x + (i % 3) == lin && corner_y + (i / 3) != col) || (corner_x + (i % 3) != lin && corner_y + (i / 3) == col) ) //Garante que não vai verifica contra ele mesmo
-        && (*Tabuleiro).celulas[corner_x + (i % 3)][corner_y + (i / 3)].invalidoRegiao != 1 && (*Tabuleiro).celulas[corner_x + (i % 3)][corner_y + (i / 3)].conteudo != 0){ // Garante que não esta repetidno
+      if((*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo //Verifica o conteudo
+        && ((cantoX + (i % 3) != col && cantoY + (i / 3) != lin) || (cantoX + (i % 3) == col && cantoY + (i / 3) != lin) || (cantoX + (i % 3) != col && cantoY + (i / 3) == lin) ) //Garante que não vai verifica contra ele mesmo
+        && (*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].invalidoRegiao != 1 && (*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].conteudo != 0){ // Garante que não esta repetidno
         
         if(metodo == 3)
           return 0;
@@ -158,70 +149,7 @@ int verificaCelula(QTabuleiro* Tabuleiro, int lin, int col, int metodo){
 
 }
 
-int** encontraInvalidos(QTabuleiro* Tabuleiro, int lin, int col, int metodo){
-
-  int **CoordenadasInvalidas;   
-  CoordenadasInvalidas = alocaMatriz(9, 2);
-
-  int corner_x = lin / 3 * 3;
-  int corner_y = col / 3 * 3;
-
-  int k = 0;
-  
-  //Valida Linha
-  if(metodo == 0){
-    for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){
-        
-        (*Tabuleiro).celulas[lin][i].invalidoLinha = 1;
-
-        CoordenadasInvalidas[k][0] = lin;
-        CoordenadasInvalidas[k][1] = i;
-        k++;
-
-      }
-    }
-  }
-
-  //Valida Coluna
-  else if(metodo == 1){
-    for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){
-      
-        (*Tabuleiro).celulas[i][col].invalidoColuna = 1;
-        
-        CoordenadasInvalidas[k][0] = i;
-        CoordenadasInvalidas[k][1] = col;
-        k++;
-
-      }
-    }
-  }
-
-  //Verifica Região
-  else if(metodo == 2){
-    for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[corner_x + (i % 3)][corner_y + (i / 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ 
-        
-        (*Tabuleiro).celulas[corner_x + (i % 3)][corner_y + (i / 3)].invalidoRegiao = 1;
-        
-        CoordenadasInvalidas[k][0] = corner_x + (i % 3);
-        CoordenadasInvalidas[k][1] = corner_y + (i / 3);
-        k++;
-      }
-    } 
-  }
-
-  if(k < 9){
-    CoordenadasInvalidas[k][0] = -1;
-    CoordenadasInvalidas[k][1] = -1;
-  }
-  
-  return CoordenadasInvalidas;
-
-}
-
-int EhValido(QTabuleiro* Tabuleiro){
+int EhValido(TADTabuleiro* Tabuleiro){
 
   int** CoordenadasInvalidas;
   int temInvalidas = 0;
@@ -265,15 +193,73 @@ int EhValido(QTabuleiro* Tabuleiro){
   for (int i = 0; i < 9; i++){
       for (int j = 0; j < 9; j++){
           if(verificaCelula(Tabuleiro, i, j, 2) == 0){
-              int corner_x = i / 3 * 3;
-              int corner_y = j / 3 * 3;
+              int cantoX = i / 3 * 3;
+              int cantoY = j / 3 * 3;
               CoordenadasInvalidas = encontraInvalidos(Tabuleiro, i, j, 2);
-              PrintInvalidas(CoordenadasInvalidas, 2 ,(corner_y/3 + 1) + (corner_x));    
+              PrintInvalidas(CoordenadasInvalidas, 2 ,(cantoY/3) + (cantoX)); 
           }
       }        
   }
   
   return 0;
+
+}
+
+int** encontraInvalidos(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
+
+  int **CoordenadasInvalidas;   
+  CoordenadasInvalidas = alocaMatriz(9, 2);
+
+  int cantoX = lin / 3 * 3;
+  int cantoY = col / 3 * 3;
+
+  int k = 0;
+  
+  //Valida Linha
+  if(metodo == 0){
+    for (int i = 0; i < 9; i++){
+      if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){
+        
+        (*Tabuleiro).celulas[lin][i].invalidoLinha = 1;
+        CoordenadasInvalidas[k][0] = lin;
+        CoordenadasInvalidas[k][1] = i;
+        k++;
+      }
+    }
+  }
+
+  //Valida Coluna
+  else if(metodo == 1){
+    for (int i = 0; i < 9; i++){
+      if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){
+      
+        (*Tabuleiro).celulas[i][col].invalidoColuna = 1;
+        CoordenadasInvalidas[k][0] = i;
+        CoordenadasInvalidas[k][1] = col;
+        k++;
+      }
+    }
+  }
+
+  //Verifica Região
+  else if(metodo == 2){
+    for (int i = 0; i < 9; i++){
+      if((*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ 
+        
+        (*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].invalidoRegiao = 1;
+        CoordenadasInvalidas[k][0] = cantoY + (i / 3);
+        CoordenadasInvalidas[k][1] = cantoX + (i % 3);
+        k++;
+      }
+    } 
+  }
+
+  if(k < 9){
+    CoordenadasInvalidas[k][0] = -1;
+    CoordenadasInvalidas[k][1] = -1;
+  }
+  
+  return CoordenadasInvalidas;
 
 }
 
@@ -301,12 +287,20 @@ void PrintInvalidas(int** CoordenadasInvalidas, int local, int numero){
       printf("(%i, %i)\n", CoordenadasInvalidas[j][0]+1, CoordenadasInvalidas[j][1]+1);
     }    
   }
- 
+
   desalocaMatriz(CoordenadasInvalidas, 9);  
 
 } 
 
-void printSugestoes(QTabuleiro* Tabuleiro){
+int defineVazias(TADTabuleiro* Tabuleiro, int lin, int col){
+
+  if(Tabuleiro->celulas[lin][col].conteudo == 0){
+    return 1;
+  }
+  return 0;
+}
+
+void printSugestoes(TADTabuleiro* Tabuleiro){
 
   for (int i = 0; i < 9; i++){
     for (int j = 0; j < 9; j++){
@@ -323,10 +317,9 @@ void printSugestoes(QTabuleiro* Tabuleiro){
       }
     }
   }
-
 }
 
-void imprimeTabuleiro(QTabuleiro *tabuleiro){
+void imprimeTabuleiro(TADTabuleiro *tabuleiro){
 
   for(int i = 0; i < 9; i++){
     if(i == 0){

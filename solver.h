@@ -1,8 +1,8 @@
 #ifndef SolverH
 #define SolverH
 
-int valid(QTabuleiro*, int, int, int);
-int solve(QTabuleiro*);
-int find_empty_cell(QTabuleiro*, int *, int *);
+int valid(TADTabuleiro*, int, int, int);
+int solve(TADTabuleiro*);
+int find_empty_cell(TADTabuleiro*, int *, int *);
 
 #endif //SolverH

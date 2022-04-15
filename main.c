@@ -22,7 +22,7 @@ gcc *.c -o exe
 
 int main(int argc, char *argv[]) {
 
-    QTabuleiro *Tabuleiro;
+    TADTabuleiro *Tabuleiro;
     char *nomeArquivo;
     
     int temVazia = 0;
@@ -66,18 +66,17 @@ int main(int argc, char *argv[]) {
     else if(temVazia == 1 && temInvalidas == 0){
         
         //Printe Sugestões
+        printf("Voce esta no caminho certo. Sugestoes:\n");
         printSugestoes(Tabuleiro);
 
         //Resolver (Ponto Extra)
-        if (solve(Tabuleiro))
-            imprimeTabuleiro(Tabuleiro);
-        else
+        if (solve(Tabuleiro) == 0)
             printf("\n\nNO SOLUTION FOUND\n\n");
     }
     
     //------------------------------------------------------------------------------------------------------------------------
 
-    imprimeTabuleiro(Tabuleiro);
+    //imprimeTabuleiro(Tabuleiro);
 
     //Desalocações
     desalocaTabuleiro(&Tabuleiro);
