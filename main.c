@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
     
     //------------------------------------------------------------------------------------------------------------------------
 
-    imprimeTabuleiro(Tabuleiro);
+    //imprimeTabuleiro(Tabuleiro);
 
     //Desalocações
     desalocaTabuleiro(&Tabuleiro);

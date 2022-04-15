@@ -114,7 +114,7 @@ int verificaCelula(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
   }
 
   //Verifica Coluna
-  else if(metodo == 1 || metodo == 3){
+  if(metodo == 1 || metodo == 3){
     //Percorre toda a coluna
     for (int i = 0; i < 9; i++){
       //Verifica a celula atual contra todas da coluna menos ela mesma
@@ -130,13 +130,13 @@ int verificaCelula(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
   }
 
   //Verifica Região
-  else if(metodo == 2 || metodo == 3){
+  if(metodo == 2 || metodo == 3){
     //Percorre toda a região. Começando de acordo com qual região esta e indo 3 posições a mais
     for (int i = 0; i < 9; i++){
       if((*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo //Verifica o conteudo
         && ((cantoX + (i % 3) != lin && cantoY + (i / 3) != col) || (cantoX + (i % 3) == lin && cantoY + (i / 3) != col) || (cantoX + (i % 3) != lin && cantoY + (i / 3) == col) ) //Garante que não vai verifica contra ele mesmo
         && (*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].invalidoRegiao != 1 && (*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].conteudo != 0){ // Garante que não esta repetidno
-        
+ 
         if(metodo == 3)
           return 0;
         
@@ -229,7 +229,7 @@ int** encontraInvalidos(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
   }
 
   //Valida Coluna
-  else if(metodo == 1){
+  if(metodo == 1){
     for (int i = 0; i < 9; i++){
       if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){
       
@@ -242,13 +242,13 @@ int** encontraInvalidos(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
   }
 
   //Verifica Região
-  else if(metodo == 2){
+  if(metodo == 2){
     for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ 
-        
-        (*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].invalidoRegiao = 1;
-        CoordenadasInvalidas[k][0] = cantoY + (i / 3);
-        CoordenadasInvalidas[k][1] = cantoX + (i % 3);
+      if((*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ 
+        (*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].invalidoRegiao = 1;
+
+        CoordenadasInvalidas[k][0] = cantoX + (i % 3);
+        CoordenadasInvalidas[k][1] = cantoY + (i / 3);
         k++;
       }
     } 
