@@ -133,9 +133,9 @@ int verificaCelula(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
   else if(metodo == 2 || metodo == 3){
     //Percorre toda a região. Começando de acordo com qual região esta e indo 3 posições a mais
     for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo //Verifica o conteudo
-        && ((cantoX + (i % 3) != col && cantoY + (i / 3) != lin) || (cantoX + (i % 3) == col && cantoY + (i / 3) != lin) || (cantoX + (i % 3) != col && cantoY + (i / 3) == lin) ) //Garante que não vai verifica contra ele mesmo
-        && (*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].invalidoRegiao != 1 && (*Tabuleiro).celulas[cantoY + (i / 3)][cantoX + (i % 3)].conteudo != 0){ // Garante que não esta repetidno
+      if((*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo //Verifica o conteudo
+        && ((cantoX + (i % 3) != lin && cantoY + (i / 3) != col) || (cantoX + (i % 3) == lin && cantoY + (i / 3) != col) || (cantoX + (i % 3) != lin && cantoY + (i / 3) == col) ) //Garante que não vai verifica contra ele mesmo
+        && (*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].invalidoRegiao != 1 && (*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].conteudo != 0){ // Garante que não esta repetidno
         
         if(metodo == 3)
           return 0;
