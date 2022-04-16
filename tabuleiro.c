@@ -156,7 +156,7 @@ int ValidaBoard(TADTabuleiro* Tabuleiro){
 
   for (int i = 0; i < 9; i++){
     for (int j = 0; j < 9; j++){
-        if(verificaCelula(Tabuleiro, i, j, 3) == 0){ 
+        if(EhValido(Tabuleiro, i, j, 3) == 0){ 
             printf("Alguma coisa deu errado... Invalidos:\n");
             temInvalidas = 1;
             break;
@@ -172,7 +172,7 @@ int ValidaBoard(TADTabuleiro* Tabuleiro){
   //Printar Problema na linha
   for (int i = 0; i < 9; i++){
       for (int j = 0; j < 9; j++){
-          if(verificaCelula(Tabuleiro, i, j, 0) == 0){
+          if(EhValido(Tabuleiro, i, j, 0) == 0){
               CoordenadasInvalidas = encontraInvalidos(Tabuleiro, i, j, 0);
               PrintInvalidas(CoordenadasInvalidas, 0, i);
           }
@@ -182,7 +182,7 @@ int ValidaBoard(TADTabuleiro* Tabuleiro){
   //Printar Problema na coluna
   for (int i = 0; i < 9; i++){
       for (int j = 0; j < 9; j++){
-          if(verificaCelula(Tabuleiro, j, i, 1) == 0){
+          if(EhValido(Tabuleiro, j, i, 1) == 0){
               CoordenadasInvalidas = encontraInvalidos(Tabuleiro, j, i, 1);
               PrintInvalidas(CoordenadasInvalidas, 1, i);     
           }
@@ -192,7 +192,7 @@ int ValidaBoard(TADTabuleiro* Tabuleiro){
   //Printar Problema na regiao
   for (int i = 0; i < 9; i++){
       for (int j = 0; j < 9; j++){
-          if(verificaCelula(Tabuleiro, i, j, 2) == 0){
+          if(EhValido(Tabuleiro, i, j, 2) == 0){
               int cantoX = i / 3 * 3;
               int cantoY = j / 3 * 3;
               CoordenadasInvalidas = encontraInvalidos(Tabuleiro, i, j, 2);
@@ -308,7 +308,7 @@ void valoresValidos(TADTabuleiro* Tabuleiro){
           printf("(%i, %i): ", i+1, j+1);
           for (int k = 1; k < 10; k++){
             (*Tabuleiro).celulas[i][j].conteudo = k;
-            if(verificaCelula(Tabuleiro, i, j, 0) == 1 && verificaCelula(Tabuleiro, i, j, 1) == 1 && verificaCelula(Tabuleiro, i, j, 2) == 1)
+            if(EhValido(Tabuleiro, i, j, 0) == 1 && EhValido(Tabuleiro, i, j, 1) == 1 && EhValido(Tabuleiro, i, j, 2) == 1)
               printf("%i ", k);
 
             (*Tabuleiro).celulas[i][j].conteudo = 0;

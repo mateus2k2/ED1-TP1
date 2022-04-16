@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
         
         //Printe Sugestões
         printf("Voce esta no caminho certo. Sugestoes:\n");
-        printSugestoes(Tabuleiro);
+        valoresValidos(Tabuleiro);
 
         //Resolver (Ponto Extra)
         if (resolve(Tabuleiro) == 0)
