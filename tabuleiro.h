@@ -18,14 +18,14 @@ void desalocaMatriz(int **mat, int lin);
 
 void TabuleiroInicializa(char *nomeArquivo, TADTabuleiro*);
 
-int verificaCelula(TADTabuleiro* Tabuleiro, int lin, int col, int metodo);
+int EhValido(TADTabuleiro* Tabuleiro, int lin, int col, int metodo);
 
-int EhValido(TADTabuleiro* Tabuleiro);
+int ValidaBoard(TADTabuleiro* Tabuleiro);
 int** encontraInvalidos(TADTabuleiro* Tabuleiro, int lin, int col, int metodo);
 void PrintInvalidas(int** CoordenadasInvalidas, int local, int numero);
 
 int defineVazias(TADTabuleiro*, int lin, int col);
-void printSugestoes(TADTabuleiro* tabuleiro);
+void valoresValidos(TADTabuleiro* tabuleiro);
 
 void imprimeTabuleiro(TADTabuleiro *tabuleiro);
 

@@ -91,7 +91,7 @@ void TabuleiroInicializa(char *nomeArquivo, TADTabuleiro* Tabuleiro){
   }
 }
 
-int verificaCelula(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
+int EhValido(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
 
   int retorno = 1;
   int cantoX = lin / 3 * 3;
@@ -149,7 +149,7 @@ int verificaCelula(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
 
 }
 
-int EhValido(TADTabuleiro* Tabuleiro){
+int ValidaBoard(TADTabuleiro* Tabuleiro){
 
   int** CoordenadasInvalidas;
   int temInvalidas = 0;
@@ -300,7 +300,7 @@ int defineVazias(TADTabuleiro* Tabuleiro, int lin, int col){
   return 0;
 }
 
-void printSugestoes(TADTabuleiro* Tabuleiro){
+void valoresValidos(TADTabuleiro* Tabuleiro){
 
   for (int i = 0; i < 9; i++){
     for (int j = 0; j < 9; j++){

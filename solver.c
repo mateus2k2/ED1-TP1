@@ -23,9 +23,12 @@ int valida(TADTabuleiro* Tabuleiro, int linha, int coluna, int chute) {
   int cantoY = coluna / 3 * 3;
 
   for (int x = 0; x < 9; ++x) {
-    if ((*Tabuleiro).celulas[linha][x].conteudo == chute) return 0;
-    if ((*Tabuleiro).celulas[x][coluna].conteudo == chute) return 0;
-    if ((*Tabuleiro).celulas[cantoX + (x % 3)][cantoY + (x / 3)].conteudo == chute) return 0;
+    if ((*Tabuleiro).celulas[linha][x].conteudo == chute) 
+      return 0;
+    if ((*Tabuleiro).celulas[x][coluna].conteudo == chute) 
+      return 0;
+    if ((*Tabuleiro).celulas[cantoX + (x % 3)][cantoY + (x / 3)].conteudo == chute) 
+      return 0;
   }
   return 1;
 }

@@ -51,7 +51,8 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if(EhValido(Tabuleiro) == 0)
+    //Verifica se o tabuleiro inteiro é valido ou não
+    if(ValidaBoard(Tabuleiro) == 0)
         temInvalidas = 1;
   
     //Se não tiver Vazias ou Inválidas, printar sucesso
