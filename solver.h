@@ -1,8 +1,7 @@
 #ifndef SolverH
 #define SolverH
 
-int valida(TADTabuleiro*, int, int, int);
-int resolve(TADTabuleiro*);
-int encontraVazias(TADTabuleiro*, int *, int *);
+int validando(int number, TADTabuleiro* Tabuleiro, int linha, int coluna);
+int sudokuSolv(TADTabuleiro* Tabuleiro, int linha, int coluna);
 
 #endif //SolverH

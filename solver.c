@@ -15,57 +15,80 @@ struct tabuleiro{
   struct celula celulas[9][9];
 };
 
-/*
-1. Encontra uma célula Vazia.
-  1.1. Se não tem Nenhuma Célula Vazia retornar.
-2. Encontrar sugestões válidas para uma célula vazia
-  2.1. Resolver o problema recursivamente com essas sugestões.
-    2.1.1. Se não tem sugestões válidas, "marcar" a célula como 0 e a determinado "ramo" como sem fim (). (backtracking) 
-*/
+int validando(int number, TADTabuleiro* Tabuleiro, int linha, int coluna) {
+    int i=0;
 
-int valida(TADTabuleiro* Tabuleiro, int linha, int coluna, int chute) {
-  int cantoX = linha / 3 * 3;
-  int cantoY = coluna / 3 * 3;
-
-  for (int x = 0; x < 9; ++x) {
-    if ((*Tabuleiro).celulas[linha][x].conteudo == chute) 
-      return 0;
-    if ((*Tabuleiro).celulas[x][coluna].conteudo == chute) 
-      return 0;
-    if ((*Tabuleiro).celulas[cantoX + (x % 3)][cantoY + (x / 3)].conteudo == chute) 
-      return 0;
-  }
-  return 1;
-}
-
-int encontraVazias(TADTabuleiro* Tabuleiro, int *linha, int *coluna) {
-  for (int x = 0; x < 9; x++) {
-    for (int y = 0; y < 9; y++) {
-      if (!(*Tabuleiro).celulas[x][y].conteudo) {
-        *linha = x;
-        *coluna = y;
-
-        return 1;
-      }
+    int setorLinha = 3*(linha/3);
+    int setorCol = 3*(coluna/3);
+    
+    int linha1 = (linha+2)%3;//variavel utilizada pra checar a primeira linha das 4 celulas restantes
+    int linha2 = (linha+4)%3;//variavel utilizada pra checar a segunda linha das 4 celulas restantes
+    
+    int col1 = (coluna+2)%3;//variavel utilizada pra checar a primeira coluna das 4 celulas restantes
+    int col2 = (coluna+4)%3;//variavel utilizada pra checar a segunda coluna das 4 celulas restantes
+ 
+    /* Checa o valor da celula numa linha e coluna */
+    for (i=0; i<9; i++) {
+        if ((*Tabuleiro).celulas[i][coluna].conteudo == number) return 0;
+        if ((*Tabuleiro).celulas[linha][i].conteudo == number) return 0;
     }
-  }
-  return 0;
-}
-
-int resolve(TADTabuleiro* Tabuleiro) {
-  int linha;
-  int coluna;
-
-  if(!encontraVazias(Tabuleiro, &linha, &coluna)) 
+ 
+    /* Apos checar linha e coluna, serão 4 celulas restante que vão ser verificadas 
+       usando as variaveis row1/row2 e col1/col2 
+    */
+    if((*Tabuleiro).celulas[linha1+setorLinha][col1+setorCol].conteudo == number) return 0;
+    if((*Tabuleiro).celulas[linha2+setorLinha][col1+setorCol].conteudo == number) return 0;
+    if((*Tabuleiro).celulas[linha1+setorLinha][col2+setorCol].conteudo == number) return 0;
+    if((*Tabuleiro).celulas[linha2+setorLinha][col2+setorCol].conteudo == number) return 0;
     return 1;
-
-  for (int chute = 1; chute < 10; chute++) {
-    if (valida(Tabuleiro, linha, coluna, chute)) {
-      (*Tabuleiro).celulas[linha][coluna].conteudo = chute;
-
-      if(resolve(Tabuleiro)) return 1;
-      (*Tabuleiro).celulas[linha][coluna].conteudo = 0;
-    }
-  }
-  return 0;
 }
+
+int sudokuSolv(TADTabuleiro* Tabuleiro, int linha, int coluna){    
+
+  int i = 1;
+
+  for(i ; i < 10; i++){
+     if(validando(i, Tabuleiro, linha, coluna)) {
+           (*Tabuleiro).celulas[linha][coluna].conteudo = i;
+            if (coluna == 8) {
+                if (sudokuSolv(Tabuleiro, linha+1, 0)) return 1;
+            } else {
+                if (sudokuSolv(Tabuleiro, linha, coluna+1)) return 1;
+            }
+            (*Tabuleiro).celulas[linha][coluna].conteudo = 0;
+        }
+  }
+  /*
+    cada chamada dessa função passar pra proxima posição do tabuleiro
+    depois de preencher um valor válido na celula
+  */
+  //-----------------------------------------------------------------------
+  
+    /*
+        essa parte da função vai setar a condição de parada da função recursiva
+    */
+
+    if (9 == linha) {
+        return 1;
+        //Retorna 1 se chegar ate a ultima linha e tiver preenchido tudo
+    }
+ 
+    /*
+    	Se o elemento ja estiver setado na celula faz uma
+    	chamada recursiva pra proxima celula ate chegar na ultima.
+    */
+
+    if ((*Tabuleiro).celulas[linha][coluna].conteudo) {
+        if (coluna == 8) {
+            if (sudokuSolv(Tabuleiro, linha+1, 0)) return 1;
+        } else {
+            if (sudokuSolv(Tabuleiro, linha, coluna+1)) return 1;
+        }
+        return 0;
+    }
+    
+}
+
+
+
+
