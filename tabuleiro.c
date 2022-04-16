@@ -6,7 +6,6 @@
 #include<math.h>
 
 struct celula{
-  //conteudo da celula (int 1 a 9)
   int conteudo;
 
   int invalidoLinha;
@@ -101,45 +100,46 @@ int EhValido(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
   if(metodo == 0 || metodo == 3){
     //Percorre toda a linha
     for (int i = 0; i < 9; i++){
-      //Verifica a celula atual contra todas da linha menos ela mesma
+      //Verifica a celula atual contra todas da regiao menos ela mesma e menos celulas ja marcadas como inválidas ou com 0 como conteudo
       if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != col 
         && (*Tabuleiro).celulas[lin][i].invalidoLinha != 1 && (*Tabuleiro).celulas[lin][i].conteudo != 0){
-          
-        if(metodo == 3)
+  
+        if(metodo == 3) //Metodo 3 verifica linha, coluna e região ate encontra um único erro  
           return 0;
-        
+        //Se entrar no nesse if encontrou uma celula invalida então o retorno vai ser 0
         retorno = 0;
       }
     }
   }
 
-  //Verifica Coluna
+  //Verifica coluna
   if(metodo == 1 || metodo == 3){
     //Percorre toda a coluna
     for (int i = 0; i < 9; i++){
-      //Verifica a celula atual contra todas da coluna menos ela mesma
+      //Verifica a celula atual contra todas da regiao menos ela mesma e menos celulas ja marcadas como inválidas ou com 0 como conteudo
       if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo && i != lin 
         && (*Tabuleiro).celulas[i][col].invalidoColuna != 1 && (*Tabuleiro).celulas[i][col].conteudo != 0){
       
-        if(metodo == 3)
+        if(metodo == 3) //Metodo 3 verifica linha, coluna e região ate encontra um único erro
           return 0;
-
+        //Se entrar no nesse if encontrou uma celula invalida então o retorno vai ser 0
         retorno = 0;
       }
     }
   }
 
-  //Verifica Região
+  //Verifica regiao
   if(metodo == 2 || metodo == 3){
-    //Percorre toda a região. Começando de acordo com qual região esta e indo 3 posições a mais
+    //Percorre toda a regiao
     for (int i = 0; i < 9; i++){
+      //Verifica a celula atual contra todas da regiao menos ela mesma e menos celulas ja marcadas como inválidas ou com 0 como conteudo
       if((*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo //Verifica o conteudo
         && ((cantoX + (i % 3) != lin && cantoY + (i / 3) != col) || (cantoX + (i % 3) == lin && cantoY + (i / 3) != col) || (cantoX + (i % 3) != lin && cantoY + (i / 3) == col) ) //Garante que não vai verifica contra ele mesmo
         && (*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].invalidoRegiao != 1 && (*Tabuleiro).celulas[cantoX + (i % 3)][cantoY + (i / 3)].conteudo != 0){ // Garante que não esta repetidno
  
-        if(metodo == 3)
+        if(metodo == 3) //Metodo 3 verifica linha, coluna e região ate encontra um único erro
           return 0;
-        
+        //Se entrar no nesse if encontrou uma celula invalida então o retorno vai ser 0
         retorno = 0;          
       }
     } 
@@ -154,6 +154,7 @@ int ValidaBoard(TADTabuleiro* Tabuleiro){
   int** CoordenadasInvalidas;
   int temInvalidas = 0;
 
+  //Verifica se tem ao menos um erro no tabuleiro
   for (int i = 0; i < 9; i++){
     for (int j = 0; j < 9; j++){
         if(EhValido(Tabuleiro, i, j, 3) == 0){ 
@@ -166,15 +167,16 @@ int ValidaBoard(TADTabuleiro* Tabuleiro){
         break;
   }
 
+  //Se nao tiver invalidas então retorna 1 e o tabuleiro é valido
   if(temInvalidas == 0)
     return 1;
 
   //Printar Problema na linha
   for (int i = 0; i < 9; i++){
       for (int j = 0; j < 9; j++){
-          if(EhValido(Tabuleiro, i, j, 0) == 0){
-              CoordenadasInvalidas = encontraInvalidos(Tabuleiro, i, j, 0);
-              PrintInvalidas(CoordenadasInvalidas, 0, i);
+          if(EhValido(Tabuleiro, i, j, 0) == 0){ //Se tiver problema na celula em relacao a linha
+              CoordenadasInvalidas = encontraInvalidos(Tabuleiro, i, j, 0); //Encontrar todos os repetidos e armazenar na matrix [9][2] 
+              PrintInvalidas(CoordenadasInvalidas, 0, i); //Printar todas as combinação dos repetidos
           }
       }        
   }     
@@ -182,9 +184,9 @@ int ValidaBoard(TADTabuleiro* Tabuleiro){
   //Printar Problema na coluna
   for (int i = 0; i < 9; i++){
       for (int j = 0; j < 9; j++){
-          if(EhValido(Tabuleiro, j, i, 1) == 0){
-              CoordenadasInvalidas = encontraInvalidos(Tabuleiro, j, i, 1);
-              PrintInvalidas(CoordenadasInvalidas, 1, i);     
+          if(EhValido(Tabuleiro, j, i, 1) == 0){ //Se tiver problema na celula em relacao a linha
+              CoordenadasInvalidas = encontraInvalidos(Tabuleiro, j, i, 1); //Encontrar todos os repetidos e armazenar na matrix [9][2] 
+              PrintInvalidas(CoordenadasInvalidas, 1, i); //Printar todas as combinação dos repetidos    
           }
       }        
   } 
@@ -192,11 +194,11 @@ int ValidaBoard(TADTabuleiro* Tabuleiro){
   //Printar Problema na regiao
   for (int i = 0; i < 9; i++){
       for (int j = 0; j < 9; j++){
-          if(EhValido(Tabuleiro, i, j, 2) == 0){
+          if(EhValido(Tabuleiro, i, j, 2) == 0){ //Se tiver problema na celula em relacao a linha
               int cantoX = i / 3 * 3;
               int cantoY = j / 3 * 3;
-              CoordenadasInvalidas = encontraInvalidos(Tabuleiro, i, j, 2);
-              PrintInvalidas(CoordenadasInvalidas, 2 ,(cantoY/3) + (cantoX)); 
+              CoordenadasInvalidas = encontraInvalidos(Tabuleiro, i, j, 2); //Encontrar todos os repetidos e armazenar na matrix [9][2] 
+              PrintInvalidas(CoordenadasInvalidas, 2 ,(cantoY/3) + (cantoX)); //Printar todas as combinação dos repetidos
           }
       }        
   }
@@ -206,34 +208,38 @@ int ValidaBoard(TADTabuleiro* Tabuleiro){
 }
 
 int** encontraInvalidos(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
-
+  //Alocacao da matriz com as coordenadas invalidas
   int **CoordenadasInvalidas;   
   CoordenadasInvalidas = alocaMatriz(9, 2);
-
+  //Conta para percorer a regiao 
   int cantoX = lin / 3 * 3;
   int cantoY = col / 3 * 3;
 
+  //Contador de invalidas
   int k = 0;
   
-  //Valida Linha
+  //Passando pela linha
   if(metodo == 0){
     for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){
-        
-        (*Tabuleiro).celulas[lin][i].invalidoLinha = 1;
-        CoordenadasInvalidas[k][0] = lin;
+      if((*Tabuleiro).celulas[lin][i].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ //Se os conteudos forem iguais
+        //Marca a celula como invalida em relacao a linha
+        (*Tabuleiro).celulas[lin][i].invalidoLinha = 1; 
+        //Adiciona a coordenada na matriz de invalidas
+        CoordenadasInvalidas[k][0] = lin; 
         CoordenadasInvalidas[k][1] = i;
+        //Incrementa na quantidade de invalidas
         k++;
       }
     }
   }
 
-  //Valida Coluna
+  //Passando pela coluna
   if(metodo == 1){
     for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){
-      
+      if((*Tabuleiro).celulas[i][col].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ //Se os conteudos forem iguais
+        //Marca a celula como invalida em relacao a coluna
         (*Tabuleiro).celulas[i][col].invalidoColuna = 1;
+        //Adiciona a coordenada na matriz de invalidas
         CoordenadasInvalidas[k][0] = i;
         CoordenadasInvalidas[k][1] = col;
         k++;
@@ -241,19 +247,22 @@ int** encontraInvalidos(TADTabuleiro* Tabuleiro, int lin, int col, int metodo){
     }
   }
 
-  //Verifica Região
+  //Passando pela regiao
   if(metodo == 2){
     for (int i = 0; i < 9; i++){
-      if((*Tabuleiro).celulas[cantoX + (i / 3)][cantoY + (i % 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ 
+      if((*Tabuleiro).celulas[cantoX + (i / 3)][cantoY + (i % 3)].conteudo == (*Tabuleiro).celulas[lin][col].conteudo){ //Se os conteudos forem iguais
+        //Marca a celula como invalida em relacao a regiao
         (*Tabuleiro).celulas[cantoX + (i / 3)][cantoY + (i % 3)].invalidoRegiao = 1;
-
+        //Adiciona a coordenada na matriz de invalidas
         CoordenadasInvalidas[k][0] = cantoX + (i / 3);
         CoordenadasInvalidas[k][1] = cantoY + (i % 3);
+        //Incrementa na quantidade de invalidas
         k++;
       }
     } 
   }
 
+  //Se nao encheu o matriz marcar o proxima linha com -1 
   if(k < 9){
     CoordenadasInvalidas[k][0] = -1;
     CoordenadasInvalidas[k][1] = -1;
@@ -267,13 +276,15 @@ void PrintInvalidas(int** CoordenadasInvalidas, int local, int numero){
   
   int quantidadeInvalidas=0;
 
+  //Verifica a quantidade de coordenadas tem na matriz
   for (int i = 0; i < 9; i++){
     if(CoordenadasInvalidas[i][0] != -1)
       quantidadeInvalidas++;
     else  
       break;
   }  
-
+  //No total será impressa a combinação de todas as coordenadas onde a ordem não importa e repetições nao são permitidas
+  //Então para cada coordenada sera impressa ela com todas as posteiores
   for (int i = 0; i < quantidadeInvalidas; i++){
     for (int j = i+1; j < quantidadeInvalidas; j++){
       if(local == 0)
@@ -302,15 +313,18 @@ int defineVazias(TADTabuleiro* Tabuleiro, int lin, int col){
 
 void valoresValidos(TADTabuleiro* Tabuleiro){
 
+  //Percorre toda a matriz 
   for (int i = 0; i < 9; i++){
     for (int j = 0; j < 9; j++){
-      if(defineVazias(Tabuleiro, i, j) == 1){
+      if(defineVazias(Tabuleiro, i, j) == 1){ //Se a célula é vazia
           printf("(%i, %i): ", i+1, j+1);
-          for (int k = 1; k < 10; k++){
+          for (int k = 1; k < 10; k++){ //Testar os valores de 1 a 9 nesse local
+            //Supoe o valor nesse local
             (*Tabuleiro).celulas[i][j].conteudo = k;
             if(EhValido(Tabuleiro, i, j, 0) == 1 && EhValido(Tabuleiro, i, j, 1) == 1 && EhValido(Tabuleiro, i, j, 2) == 1)
+              //Se for valido na linha, coluna e região ele é valido
               printf("%i ", k);
-
+            //Volta a celula como 0
             (*Tabuleiro).celulas[i][j].conteudo = 0;
           }
           printf("\n");

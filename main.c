@@ -31,6 +31,7 @@ int main(int argc, char *argv[]) {
     //Aloca Tabuleiro
     alocaTabuleiro(&Tabuleiro);
 
+    //Leitura e alocação nome do arquivo
     if(argc < 2){
         alocaNomeArquivo(&nomeArquivo, strlen("tabuleiro.txt"));
         strcpy(nomeArquivo, "tabuleiro.txt");
