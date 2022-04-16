@@ -1,5 +1,3 @@
-//https://medium.com/@qwerty2323/sudoku-solver-c-recursive-implementation-backtracking-technique-415b42f9a24c
-
 #include <stdio.h>
 #include "tabuleiro.h"
 
@@ -17,6 +15,14 @@ struct tabuleiro{
   //Matriz de célula para compor o tabuleiro  
   struct celula celulas[9][9];
 };
+
+/*
+1. Encontra uma célula Vazia.
+  1.1. Se não tem Nenhuma Célula Vazia retornar.
+2. Encontrar sugestões válidas para uma célula vazia
+  2.1. Resolver o problema recursivamente com essas sugestões.
+    2.1.1. Se não tem sugestões válidas, "marcar" a célula como 0 e a determinado "ramo" como sem fim (). (backtracking) 
+*/
 
 int valida(TADTabuleiro* Tabuleiro, int linha, int coluna, int chute) {
   int cantoX = linha / 3 * 3;
@@ -51,7 +57,8 @@ int resolve(TADTabuleiro* Tabuleiro) {
   int linha;
   int coluna;
 
-  if(!encontraVazias(Tabuleiro, &linha, &coluna)) return 1;
+  if(!encontraVazias(Tabuleiro, &linha, &coluna)) 
+    return 1;
 
   for (int chute = 1; chute < 10; chute++) {
     if (valida(Tabuleiro, linha, coluna, chute)) {
