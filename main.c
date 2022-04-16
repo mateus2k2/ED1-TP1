@@ -51,8 +51,6 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    //------------------------------------------------------------------------------------------------------------------------
-
     if(EhValido(Tabuleiro) == 0)
         temInvalidas = 1;
   
@@ -70,14 +68,12 @@ int main(int argc, char *argv[]) {
         printSugestoes(Tabuleiro);
 
         //Resolver (Ponto Extra)
-        if (solve(Tabuleiro) == 0)
-            printf("\n\nNO SOLUTION FOUND\n\n");
+        if (resolve(Tabuleiro) == 0)
+            printf("Erro\n");
+        else
+            imprimeTabuleiro(Tabuleiro);
     }
     
-    //------------------------------------------------------------------------------------------------------------------------
-
-    //imprimeTabuleiro(Tabuleiro);
-
     //Desalocações
     desalocaTabuleiro(&Tabuleiro);
     desalocaNomeArquivo(&nomeArquivo);

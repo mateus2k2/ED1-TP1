@@ -18,24 +18,24 @@ struct tabuleiro{
   struct celula celulas[9][9];
 };
 
-int valid(TADTabuleiro* Tabuleiro, int row, int column, int guess) {
-  int corner_x = row / 3 * 3;
-  int corner_y = column / 3 * 3;
+int valida(TADTabuleiro* Tabuleiro, int linha, int coluna, int chute) {
+  int cantoX = linha / 3 * 3;
+  int cantoY = coluna / 3 * 3;
 
   for (int x = 0; x < 9; ++x) {
-    if ((*Tabuleiro).celulas[row][x].conteudo == guess) return 0;
-    if ((*Tabuleiro).celulas[x][column].conteudo == guess) return 0;
-    if ((*Tabuleiro).celulas[corner_x + (x % 3)][corner_y + (x / 3)].conteudo == guess) return 0;
+    if ((*Tabuleiro).celulas[linha][x].conteudo == chute) return 0;
+    if ((*Tabuleiro).celulas[x][coluna].conteudo == chute) return 0;
+    if ((*Tabuleiro).celulas[cantoX + (x % 3)][cantoY + (x / 3)].conteudo == chute) return 0;
   }
   return 1;
 }
 
-int find_empty_cell(TADTabuleiro* Tabuleiro, int *row, int *column) {
+int encontraVazias(TADTabuleiro* Tabuleiro, int *linha, int *coluna) {
   for (int x = 0; x < 9; x++) {
     for (int y = 0; y < 9; y++) {
       if (!(*Tabuleiro).celulas[x][y].conteudo) {
-        *row = x;
-        *column = y;
+        *linha = x;
+        *coluna = y;
 
         return 1;
       }
@@ -44,18 +44,18 @@ int find_empty_cell(TADTabuleiro* Tabuleiro, int *row, int *column) {
   return 0;
 }
 
-int solve(TADTabuleiro* Tabuleiro) {
-  int row;
-  int column;
+int resolve(TADTabuleiro* Tabuleiro) {
+  int linha;
+  int coluna;
 
-  if(!find_empty_cell(Tabuleiro, &row, &column)) return 1;
+  if(!encontraVazias(Tabuleiro, &linha, &coluna)) return 1;
 
-  for (int guess = 1; guess < 10; guess++) {
-    if (valid(Tabuleiro, row, column, guess)) {
-      (*Tabuleiro).celulas[row][column].conteudo = guess;
+  for (int chute = 1; chute < 10; chute++) {
+    if (valida(Tabuleiro, linha, coluna, chute)) {
+      (*Tabuleiro).celulas[linha][coluna].conteudo = chute;
 
-      if(solve(Tabuleiro)) return 1;
-      (*Tabuleiro).celulas[row][column].conteudo = 0;
+      if(resolve(Tabuleiro)) return 1;
+      (*Tabuleiro).celulas[linha][coluna].conteudo = 0;
     }
   }
   return 0;
