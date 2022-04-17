@@ -361,6 +361,4 @@ void imprimeTabuleiro(TADTabuleiro *tabuleiro){
       printf("\n");        
   }
     
-    printf("\n\n\n");        
-
 }

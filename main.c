@@ -69,14 +69,14 @@ int main(int argc, char *argv[]) {
         printf("Voce esta no caminho certo. Sugestoes:\n");
         valoresValidos(Tabuleiro);
 
-        sudokuSolv(Tabuleiro, 0, 0);
-        imprimeTabuleiro(Tabuleiro);
+        // sudokuSolv(Tabuleiro, 0, 0);
+        // imprimeTabuleiro(Tabuleiro);
 
         //Resolver (Ponto Extra)
-        // if (resolve(Tabuleiro) == 0)
-        //     printf("Erro\n");
-        // else
-        //     imprimeTabuleiro(Tabuleiro);
+        if (resolve(Tabuleiro) == 0)
+            printf("Erro\n");
+        else
+            imprimeTabuleiro(Tabuleiro);
     }
     
     //Desalocações
