@@ -7,16 +7,16 @@
 
 /*
 ARQUIVOS INTERMEDIÁRIOS
-gcc -c tabuleiro.c tabuleiro.o -Wall
-gcc -c main.c main.o -Wall
-gcc -c solver.c solver.o -Wall
+gcc -c tabuleiro.c -o tabuleiro.o -Wall
+gcc -c main.c -o main.o -Wall
+gcc -c solver.c -o solver.o -Wall
 LINKAR ARQUIVOS
 gcc tabuleiro.o main.o solver.o -o exe
 EXECUTAR
 ./exe
 
 COMPILAR TUDO DE UMA VEZ
-gcc *.c -o exe
+gcc *.c -o exe -Wall
 ./exe
 */
 

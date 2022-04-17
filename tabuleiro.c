@@ -69,6 +69,7 @@ void TabuleiroInicializa(char *nomeArquivo, TADTabuleiro* Tabuleiro){
   FILE* arquivo;
   int valor;
   char tmp;
+  int cont = 0;
 
   //Abre o arquivo
   arquivo = fopen(nomeArquivo, "r");
@@ -85,8 +86,18 @@ void TabuleiroInicializa(char *nomeArquivo, TADTabuleiro* Tabuleiro){
       fscanf(arquivo, "%d%c", &valor, &tmp);
     
       (*Tabuleiro).celulas[i][j].conteudo = valor;
-      
+
+      if(valor >= 0 && valor <= 9)
+        cont++;
+      else {
+        printf("Erro\n");
+        exit(1);
+      }
     }
+  }
+  if(cont != 81){
+    printf("Erro\n");
+    exit(1);
   }
 }
 
