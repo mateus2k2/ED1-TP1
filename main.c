@@ -1,6 +1,6 @@
 #include "tabuleiro.h"
-
 #include "solver.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -68,9 +68,6 @@ int main(int argc, char *argv[]) {
         //Printe Sugestões
         printf("Voce esta no caminho certo. Sugestoes:\n");
         valoresValidos(Tabuleiro);
-
-        // sudokuSolv(Tabuleiro, 0, 0);
-        // imprimeTabuleiro(Tabuleiro);
 
         //Resolver (Ponto Extra)
         if (resolve(Tabuleiro) == 0)

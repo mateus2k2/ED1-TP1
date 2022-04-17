@@ -1,7 +1,6 @@
-//https://medium.com/@qwerty2323/sudoku-solver-c-recursive-implementation-backtracking-technique-415b42f9a24c
+#include "tabuleiro.h"
 
 #include <stdio.h>
-#include "tabuleiro.h"
 
 struct celula{
   int conteudo;

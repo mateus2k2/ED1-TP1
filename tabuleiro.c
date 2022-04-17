@@ -346,30 +346,23 @@ void valoresValidos(TADTabuleiro* Tabuleiro){
 
 void imprimeTabuleiro(TADTabuleiro *tabuleiro){
 
-  // for(int i = 0; i < 9; i++){
-  //   if(i == 0){
-  //     printf("    1 2 3   4 5 6   7 8 9\n   -----------------------\n");
-  //   }
-  //   for(int j = 0; j < 9; j++){
-  //     if(j == 0){
-  //       printf("%d | ", (i+1));
-  //     }
-  //     tabuleiro->celulas[i][j].conteudo == 0 ? printf("  ") : printf("%d ",tabuleiro->celulas[i][j].conteudo);
-  //     if(j == 2 || j == 5 || j == 8){
-  //       printf("| ");
-  //     }
-  //   }
-  //   if(i == 2 || i == 5 || i == 8){
-  //       printf("\n   -----------------------");
-  //     }
-  //   printf("\n");
-  // }  
-
-  for (int i = 0; i < 9; i++){
-      for (int j = 0; j < 9; j++){
-          printf("%i ", (*tabuleiro).celulas[i][j].conteudo);
+  for(int i = 0; i < 9; i++){
+    if(i == 0){
+      printf("    1 2 3   4 5 6   7 8 9\n   -----------------------\n");
+    }
+    for(int j = 0; j < 9; j++){
+      if(j == 0){
+        printf("%d | ", (i+1));
       }
-      printf("\n");        
-  }
+      tabuleiro->celulas[i][j].conteudo == 0 ? printf("  ") : printf("%d ",tabuleiro->celulas[i][j].conteudo);
+      if(j == 2 || j == 5 || j == 8){
+        printf("| ");
+      }
+    }
+    if(i == 2 || i == 5 || i == 8){
+        printf("\n   -----------------------");
+      }
+    printf("\n");
+  }  
     
 }
